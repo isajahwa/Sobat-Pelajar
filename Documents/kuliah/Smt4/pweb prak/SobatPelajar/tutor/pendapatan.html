@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pendapatan & Saldo – SobatPelajar</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/mentor/style.css" />
+</head>
+
+<body>
+    <div class="overlay" id="overlay"></div>
+
+    <div class="layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <div class="nama">Sobat<span>Pelajar</span></div>
+                <div class="peran">Keuangan Mentor</div>
+            </div>
+
+            <nav class="sidebar-menu">
+                <div class="menu-label">Menu Utama</div>
+                <a href="ringkasan.html" class="menu-item"><i class="fa fa-th-large"></i>Ringkasan</a>
+                <a href="kelola_pesanan.html" class="menu-item"><i class="fa-solid fa-bag-shopping"></i>Kelola
+                    Pesanan</a>
+                <a href="jadwal_mengajar.html" class="menu-item"><i class="fa fa-calendar"></i>Jadwal Mengajar</a>
+                <a href="daftar_siswa.html" class="menu-item"><i class="fa fa-users"></i>Daftar Siswa</a>
+                <a href="upload_materi.html" class="menu-item"><i class="fa fa-upload"></i>Upload Materi</a>
+                <a href="kelas.html" class="menu-item"><i class="fa fa-plus-circle"></i>Tambah/Ubah Kelas</a>
+
+                <div class="menu-label" style="margin-top:8px;">Akun</div>
+                <a href="profil.html" class="menu-item"><i class="fa fa-user-circle"></i>Profil</a>
+                <a href="pendapatan.html" class="menu-item aktif"><i class="fa fa-wallet"></i>Pendapatan</a>
+            </nav>
+
+            <div class="sidebar-bawah">
+                <div class="info-user">
+                    <div id="sideAvatar" class="avatar-user">B</div>
+                    <div>
+                        <div id="sideNama" class="nama-user">Budi Santoso</div>
+                        <div id="sideEmail" class="email-user">budi@email.com</div>
+                    </div>
+                </div>
+                <a href="login.html" class="btn-keluar"><i class="fa fa-sign-out-alt me-1"></i>Keluar</a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="topbar">
+                <div class="d-flex align-items-center">
+                    <button class="btn-hamburger me-3 d-lg-none" id="btnMenu"><i class="fa fa-bars"></i></button>
+                    <div>
+                        <div class="judul-halaman">Pendapatan & Saldo</div>
+                        <div class="sub-judul-halaman">Pantau penghasilan dan tarik dana Anda.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="area-halaman">
+                <div class="row g-3 mb-4">
+                    <div class="col-md-4">
+                        <div class="card card-saldo border-0 shadow-sm p-4 text-white">
+                            <small class="opacity-75">Saldo Saat Ini</small>
+                            <h2 class="fw-bold mb-0">Rp 2.450.000</h2>
+                            <i class="fa fa-wallet icon-bg-card"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card border-0 shadow-sm p-4 bg-white">
+                            <small class="text-muted">Total Pendapatan</small>
+                            <h3 class="fw-bold mb-0 text-success">Rp 12.800.000</h3>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card border-0 shadow-sm p-4 bg-white">
+                            <small class="text-muted">Proses Penarikan</small>
+                            <h3 class="fw-bold mb-0 text-warning">Rp 500.000</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-lg-5">
+                        <div class="card border-0 shadow-sm p-4 h-100">
+                            <h5 class="fw-bold mb-4">Tarik Dana (Transfer)</h5>
+                            <form id="formTarikDana">
+                                <div class="mb-3">
+                                    <label class="form-label extra-small fw-bold">BANK TUJUAN</label>
+                                    <select class="form-select rounded-3" id="bankTujuan" required>
+                                        <option value="" selected disabled>Pilih Bank...</option>
+                                        <option>BCA (Bank Central Asia)</option>
+                                        <option>Mandiri</option>
+                                        <option>BNI</option>
+                                        <option>BRI</option>
+                                        <option>DANA / GOPAY</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label extra-small fw-bold">NOMOR REKENING</label>
+                                    <input type="text" id="nomorRekening" class="form-control rounded-3"
+                                        placeholder="Contoh: 801234xxx" required>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label extra-small fw-bold">NOMINAL PENARIKAN (Rp)</label>
+                                    <input type="number" id="nominalTarik" class="form-control rounded-3"
+                                        placeholder="Min. Rp 50.000" min="50000" required>
+                                    <div class="extra-small text-muted mt-1">Biaya admin: Rp 2.500</div>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100 rounded-pill py-2 fw-bold shadow-sm">
+                                    Konfirmasi Penarikan
+                                </button>
+                            </form>
+                            <div class="mt-4 p-3 bg-light rounded-3">
+                                <p class="extra-small text-muted mb-0">
+                                    <i class="fa fa-info-circle me-1"></i> Proses penarikan dana diproses maksimal 1x24
+                                    jam pada hari kerja.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-7">
+                        <div class="card border-0 shadow-sm overflow-hidden h-100">
+                            <div class="p-4 bg-white border-bottom">
+                                <h5 class="fw-bold mb-0">Riwayat Transaksi Terakhir</h5>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-hover align-middle mb-0">
+                                    <thead class="bg-light">
+                                        <tr class="extra-small text-uppercase">
+                                            <th class="ps-4">Deskripsi</th>
+                                            <th>Tanggal</th>
+                                            <th>Jumlah</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="riwayatTabel">
+                                        <tr>
+                                            <td class="ps-4">
+                                                <div class="fw-bold small">Sesi Matematika - Rizky</div>
+                                                <div class="extra-small text-muted">PENDAPATAN</div>
+                                            </td>
+                                            <td>
+                                                <div class="extra-small">2 Mar 2026</div>
+                                            </td>
+                                            <td>
+                                                <div class="small fw-bold text-success">+Rp 85.000</div>
+                                            </td>
+                                            <td><span class="badge badge-hijau">Sukses</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="ps-4">
+                                                <div class="fw-bold small">Penarikan Saldo (BCA)</div>
+                                                <div class="extra-small text-muted">WITHDRAWAL</div>
+                                            </td>
+                                            <td>
+                                                <div class="extra-small">1 Mar 2026</div>
+                                            </td>
+                                            <td>
+                                                <div class="small fw-bold text-danger">-Rp 500.000</div>
+                                            </td>
+                                            <td><span class="badge badge-merah">Pending</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            loadUserSidebar();
+
+            // Hamburger Menu Logic
+            const btnMenu = document.getElementById('btnMenu');
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+
+            if (btnMenu) {
+                btnMenu.onclick = () => {
+                    sidebar.classList.add('active');
+                    overlay.classList.add('active');
+                }
+            }
+            overlay.onclick = () => {
+                sidebar.classList.remove('active');
+                overlay.classList.remove('active');
+            }
+
+            // Form Penarikan Logic
+            const formTarik = document.getElementById('formTarikDana');
+            formTarik.onsubmit = function (e) {
+                e.preventDefault();
+                const nominal = document.getElementById('nominalTarik').value;
+                const bank = document.getElementById('bankTujuan').value;
+
+                if (nominal > 2450000) {
+                    alert("Maaf, saldo Anda tidak mencukupi!");
+                } else {
+                    alert(`Permintaan penarikan Rp ${parseInt(nominal).toLocaleString('id-ID')} ke ${bank} berhasil dikirim!`);
+                    formTarik.reset();
+                }
+            }
+        });
+
+        function loadUserSidebar() {
+            const profil = JSON.parse(localStorage.getItem('user_profil'));
+            if (profil) {
+                document.getElementById('sideNama').innerText = profil.nama;
+                document.getElementById('sideEmail').innerText = profil.email;
+                document.getElementById('sideAvatar').innerText = profil.nama.charAt(0).toUpperCase();
+            }
+        }
+    </script>
+</body>
+
+</html>

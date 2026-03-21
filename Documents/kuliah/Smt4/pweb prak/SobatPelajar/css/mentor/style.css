@@ -1,0 +1,623 @@
+/* ================================================
+   1. VARIABEL & RESET
+   ================================================ */
+:root {
+    --biru: #1565C0;
+    --biru-tua: #0D47A1;
+    --biru-muda: #EFF6FF;
+    --oranye: #FF6B2B;
+    --oranye-lt: #FFF4EE;
+    --hijau: #16A34A;
+    --hijau-lt: #F0FDF4;
+    --merah: #DC2626;
+    --merah-lt: #FEF2F2;
+    --kuning: #F59E0B;
+    --teks: #1A1A2E;
+    --abu: #6B7280;
+    --border: #E5E9F2;
+    --bg: #F4F7FC;
+    --white: #FFFFFF;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: var(--bg);
+    color: var(--teks);
+    line-height: 1.5;
+}
+
+/* ================================================
+   2. LAYOUT & SIDEBAR
+   ================================================ */
+.layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 260px;
+    background: #0D3B6E;
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    height: 100vh;
+    z-index: 1000;
+    transition: 0.3s;
+}
+
+.main-content {
+    flex: 1;
+    margin-left: 260px;
+    padding: 0;
+    transition: 0.3s;
+}
+
+@media (max-width: 991px) {
+    .sidebar {
+        left: -260px;
+    }
+
+    .sidebar.active {
+        left: 0;
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+}
+
+/* Sidebar Brand & Menu */
+.sidebar-brand {
+    padding: 30px 25px;
+    border-bottom: 1px solid rgb(255, 255, 255);
+}
+
+.sidebar-brand .nama {
+    color: white;
+    font-weight: 700;
+    font-size: 1.3rem;
+}
+
+.sidebar-brand .nama span {
+    color: var(--oranye);
+}
+
+.sidebar-brand .peran {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.75rem;
+}
+
+.sidebar-menu {
+    padding: 20px 0;
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.menu-label {
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 10px 25px;
+    text-transform: uppercase;
+}
+
+.menu-item {
+    padding: 12px 25px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: 0.3s;
+}
+
+.menu-item:hover,
+.menu-item.aktif {
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+}
+
+.menu-item.aktif {
+    border-left: 4px solid var(--oranye);
+    background: rgba(255, 107, 43, 0.1);
+}
+
+/* Sidebar Bottom */
+.sidebar-bawah {
+    padding: 20px;
+    border-top: 1px solid rgb(255, 255, 255);
+    background: #0D3B6E;
+    margin-top: auto;
+}
+
+.info-user {
+    display: flex;
+    gap: 12px;
+    /* Ditambah sedikit biar gak mepet */
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.nama-user {
+    color: #FFFFFF !important;
+    /* Pakai !important kalau masih bandel */
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.email-user {
+    color: rgba(255, 255, 255, 0.6) !important;
+    /* Putih transparan agar ada hierarki */
+    font-size: 0.7rem;
+}
+
+/* ================================================
+   3. KOMPONEN GLOBAL (UI ELEMENTS)
+   ================================================ */
+.topbar {
+    background: white;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 900;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+}
+
+.area-halaman {
+    padding: 30px;
+}
+
+.judul-halaman {
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: var(--teks);
+}
+
+.sub-judul-halaman {
+    font-size: 0.8rem;
+    color: var(--abu);
+}
+
+/* Cards */
+.kartu {
+    background: white;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.kartu-header {
+    padding: 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.kartu-judul {
+    font-weight: 700;
+    color: var(--teks);
+}
+
+.kartu-body {
+    padding: 20px;
+}
+
+/* Tables */
+.tabel {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tabel th {
+    background: #F8FAFC;
+    padding: 12px 20px;
+    font-size: 0.75rem;
+    color: var(--abu);
+    text-transform: uppercase;
+    font-weight: 600;
+    text-align: left;
+}
+
+.tabel td {
+    padding: 15px 20px;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.85rem;
+}
+
+.tabel tbody tr {
+    transition: 0.2s;
+}
+
+/* Badges */
+.badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    border: 1px solid transparent;
+    display: inline-block;
+}
+
+.badge-merah {
+    background: var(--merah-lt);
+    color: var(--merah);
+}
+
+.badge-biru {
+    background: var(--biru-muda);
+    color: var(--biru);
+}
+
+.badge-hijau {
+    background: var(--hijau-lt);
+    color: var(--hijau);
+}
+
+.badge-abu {
+    background: #F3F4F6;
+    color: var(--abu);
+}
+
+/* Avatars */
+.avatar-user,
+.avatar-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: white;
+    background: var(--biru);
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+}
+
+.avatar-user {
+    background: var(--oranye);
+}
+
+/* Khusus sidebar */
+
+/* Buttons & Actions */
+.btn-aksi {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+.btn-keluar {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-top: 15px;
+    text-align: center;
+    background: var(--merah-lt);
+    color: var(--merah);
+    text-decoration: none;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.btn-keluar:hover {
+    background: var(--merah);
+    color: white;
+}
+
+.btn-hapus {
+    color: #dc3545;
+    background: none;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-hapus:hover {
+    color: #a71d2a;
+    transform: scale(1.1);
+}
+
+/* Form Elements */
+.input-group-text {
+    background-color: white;
+    cursor: pointer;
+    border-left: none;
+}
+
+.input-group .form-control {
+    border-right: none;
+}
+
+.form-control:focus+.input-group-text {
+    border-color: #86b7fe;
+}
+
+/* Shared Utilities */
+.extra-small {
+    font-size: 0.75rem;
+}
+
+.overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+.overlay.active {
+    display: block;
+}
+
+/* ================================================
+   4. MODULE SPECIFIC (RINGKASAN, PROFIL, DLL)
+   ================================================ */
+
+/* Ringkasan & Stats */
+.kartu-stat {
+    background: white;
+    padding: 20px;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    height: 100%;
+    transition: 0.3s;
+}
+
+.kartu-stat:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+}
+
+.angka-stat {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--teks);
+    margin-bottom: 4px;
+}
+
+.label-stat {
+    font-size: 0.75rem;
+    color: var(--abu);
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.trend-stat {
+    font-size: 0.7rem;
+    margin-top: 8px;
+    font-weight: 600;
+}
+
+.trend-naik {
+    color: var(--hijau);
+}
+
+/* Jadwal Timeline */
+.jadwal-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.jadwal-waktu {
+    min-width: 60px;
+    text-align: right;
+}
+
+.jadwal-waktu .jam {
+    font-weight: 700;
+    font-size: 0.85rem;
+}
+
+.jadwal-waktu .tgl {
+    font-size: 0.7rem;
+    color: var(--abu);
+}
+
+.jadwal-garis {
+    width: 4px;
+    height: 40px;
+    border-radius: 10px;
+    flex-shrink: 0;
+    margin-top: 5px;
+}
+
+.jadwal-info {
+    flex-grow: 1;
+}
+
+.jadwal-mapel {
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+/* Pendapatan & Saldo */
+.card-saldo {
+    background: linear-gradient(135deg, var(--biru) 0%, var(--biru-tua) 100%);
+    position: relative;
+    overflow: hidden;
+    color: white;
+    border: none;
+}
+
+.icon-bg-card {
+    position: absolute;
+    right: 20px;
+    bottom: 10px;
+    font-size: 3rem;
+    opacity: 0.2;
+    transform: rotate(-15deg);
+}
+
+/* Profil Section */
+.profile-stat-box {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 12px;
+    text-align: center;
+    border: 1px solid var(--border);
+}
+
+.profile-stat-value {
+    display: block;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--biru);
+}
+
+.profile-stat-label {
+    font-size: 0.7rem;
+    color: var(--abu);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-edit-avatar {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: var(--biru);
+    color: white;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid white;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* Upload & Kelas */
+.upload-box,
+.img-upload-placeholder {
+    width: 100%;
+    min-height: 150px;
+    background: #f8f9fa;
+    border: 2px dashed var(--border);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: 0.3s;
+    text-align: center;
+}
+
+.upload-box:hover,
+.img-upload-placeholder:hover {
+    border-color: var(--biru);
+    background-color: #f0f4ff;
+    color: var(--biru);
+}
+
+.item-kelas {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 15px;
+    transition: 0.3s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+}
+
+.item-kelas:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border-color: var(--biru);
+}
+
+/* Kalender */
+.calendar-table th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding: 12px;
+}
+
+.calendar-table td {
+    height: 110px;
+    vertical-align: top;
+    transition: 0.2s;
+    cursor: pointer;
+    position: relative;
+    border: 1px solid #dee2e6 !important;
+}
+
+.calendar-table td:hover {
+    background-color: #f0f4ff;
+}
+
+.calendar-table td.today {
+    background-color: #eef2ff;
+    border: 2px solid var(--biru) !important;
+}
+
+.calendar-table td.other-month {
+    background-color: #fafafa;
+    color: #ccc;
+    cursor: default;
+    pointer-events: none;
+}
+
+.event-badge {
+    font-size: 10px;
+    padding: 4px 8px;
+    border-radius: 6px;
+    margin-top: 4px;
+    display: block;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 500;
+}
+
+/* Notifikasi */
+.notif-btn {
+    position: relative;
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+
+.notif-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: var(--merah);
+    color: white;
+    font-size: 0.6rem;
+    padding: 2px 5px;
+    border-radius: 50%;
+    border: 2px solid white;
+}

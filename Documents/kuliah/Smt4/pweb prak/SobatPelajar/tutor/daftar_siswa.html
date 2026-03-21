@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Daftar Siswa – SobatPelajar</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/mentor/style.css" />
+</head>
+
+<body>
+    <div class="overlay" id="overlay"></div>
+
+    <div class="layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <div class="nama">Sobat<span>Pelajar</span></div>
+                <div class="peran">Daftar Siswa</div>
+            </div>
+
+            <nav class="sidebar-menu">
+                <div class="menu-label">Menu Utama</div>
+                <a href="ringkasan.html" class="menu-item"><i class="fa fa-th-large"></i>Ringkasan</a>
+                <a href="kelola_pesanan.html" class="menu-item"><i class="fa-solid fa-bag-shopping"></i>Kelola
+                    Pesanan</a>
+                <a href="jadwal_mengajar.html" class="menu-item"><i class="fa fa-calendar"></i>Jadwal Mengajar</a>
+                <a href="daftar_siswa.html" class="menu-item aktif"><i class="fa fa-users"></i>Daftar Siswa</a>
+                <a href="upload_materi.html" class="menu-item"><i class="fa fa-upload"></i>Upload Materi</a>
+                <a href="kelas.html" class="menu-item"><i class="fa fa-plus-circle"></i>Tambah/Ubah Kelas</a>
+
+                <div class="menu-label" style="margin-top:8px;">Akun</div>
+                <a href="profil.html" class="menu-item"><i class="fa fa-user-circle"></i>Profil</a>
+                <a href="pendapatan.html" class="menu-item"><i class="fa fa-wallet"></i>Pendapatan</a>
+            </nav>
+
+            <div class="sidebar-bawah">
+                <div class="info-user">
+                    <div class="avatar-user">B</div>
+                    <div>
+                        <div class="nama-user">Budi Santoso</div>
+                        <div class="email-user">budi@email.com</div>
+                    </div>
+                </div>
+                <a href="login.html" class="btn-keluar"><i class="fa fa-sign-out-alt me-1"></i>Keluar</a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="topbar">
+                <div class="d-flex align-items-center">
+                    <button class="btn-hamburger d-md-none me-3" id="btnMenu"><i class="fa fa-bars"></i></button>
+                    <div>
+                        <div class="judul-halaman">Daftar Siswa Aktif</div>
+                        <div class="sub-judul-halaman">Pantau perkembangan belajar bimbingan Anda.</div>
+                    </div>
+                </div>
+                <div class="topbar-kanan d-none d-sm-block">
+                    <span class="badge badge-biru p-2 px-3" id="totalSiswaBadge">
+                        <i class="fa fa-user-graduate me-1"></i> 0 Siswa Terdaftar
+                    </span>
+                </div>
+            </div>
+
+            <div class="area-halaman">
+                <div class="kartu kartu-body mb-4">
+                    <div class="row g-3">
+                        <div class="col-md-8">
+                            <div class="input-group">
+                                <span class="input-group-text bg-white border-end-0 text-muted"><i
+                                        class="fa fa-search"></i></span>
+                                <input type="text" id="inpSearch" class="form-control border-start-0 ps-0 shadow-none"
+                                    placeholder="Cari nama siswa atau sekolah...">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <select id="selFilter" class="form-select shadow-none">
+                                <option selected>Semua Jenjang</option>
+                                <option>SD</option>
+                                <option>SMP</option>
+                                <option>SMA</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="kartu">
+                    <div class="table-responsive">
+                        <table class="tabel table-hover align-middle mb-0" id="tabelSiswa">
+                            <thead>
+                                <tr>
+                                    <th class="ps-4">Siswa</th>
+                                    <th>Sekolah</th>
+                                    <th>Terakhir Sesi</th>
+                                    <th>Progres</th>
+                                    <th class="text-center">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const tableBody = document.querySelector('#tabelSiswa tbody');
+            const searchInput = document.getElementById('inpSearch');
+            const filterSelect = document.getElementById('selFilter');
+            const badgeTotal = document.getElementById('totalSiswaBadge');
+
+            // --- 1. MUAT DATA DARI LOCALSTORAGE ---
+            function loadData() {
+                const dataSiswa = JSON.parse(localStorage.getItem('daftar_siswa')) || [];
+
+                // Update badge jumlah siswa
+                badgeTotal.innerHTML = `<i class="fa fa-user-graduate me-1"></i> ${dataSiswa.length} Siswa Terdaftar`;
+
+                if (dataSiswa.length === 0) {
+                    tableBody.innerHTML = '<tr><td colspan="5" class="text-center p-5 text-muted">Belum ada siswa aktif. Data diambil dari menu Kelola Pesanan.</td></tr>';
+                    return;
+                }
+
+                renderTable(dataSiswa);
+            }
+
+            // --- 2. RENDER TABEL ---
+            function renderTable(data) {
+                tableBody.innerHTML = '';
+                data.forEach((siswa, index) => {
+                    const row = `
+                        <tr>
+                            <td class="ps-4">
+                                <div class="d-flex align-items-center">
+                                    <div class="avatar-circle me-3" style="background-color: ${stringToColor(siswa.nama)}">${siswa.inisial || '??'}</div>
+                                    <div>
+                                        <div class="fw-bold">${siswa.nama}</div>
+                                        <div class="text-muted extra-small">${siswa.email}</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td><span class="badge badge-abu">${siswa.sekolah}</span></td>
+                            <td><div class="small">${siswa.terakhir || 'Baru'}</div></td>
+                            <td>
+                                <div class="d-flex align-items-center gap-2" style="min-width: 120px;">
+                                    <div class="progress flex-grow-1" style="height: 6px;">
+                                        <div class="progress-bar ${siswa.progres > 70 ? 'bg-success' : 'bg-primary'}" style="width: ${siswa.progres}%"></div>
+                                    </div>
+                                    <span class="extra-small fw-bold">${siswa.progres}%</span>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="d-flex justify-content-center gap-2">
+                                    <button class="btn btn-sm btn-outline-primary rounded-pill px-3 btn-chat" data-nama="${siswa.nama}">
+                                        <i class="fa-solid fa-comment-dots"></i> Chat
+                                    </button>
+                                    <button class="btn-aksi btn-aksi-biru text-white btn-detail" title="Lihat Detail" data-id="${siswa.id}">
+                                        <i class="fa fa-eye"></i>
+                                    </button>
+                                    <button class="btn-hapus" title="Hapus Siswa" data-id="${siswa.id}">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                    tableBody.innerHTML += row;
+                });
+            }
+
+            // --- 3. FILTERING LOGIC ---
+            function handleFilter() {
+                const query = searchInput.value.toLowerCase();
+                const jenjang = filterSelect.value;
+                const dataSiswa = JSON.parse(localStorage.getItem('daftar_siswa')) || [];
+
+                const filtered = dataSiswa.filter(s => {
+                    const matchSearch = s.nama.toLowerCase().includes(query) || s.sekolah.toLowerCase().includes(query);
+                    const matchJenjang = (jenjang === "Semua Jenjang") || s.sekolah.toUpperCase().includes(jenjang);
+                    return matchSearch && matchJenjang;
+                });
+
+                renderTable(filtered);
+            }
+
+            // --- 4. EVENT LISTENERS ---
+            searchInput.addEventListener('input', handleFilter);
+            filterSelect.addEventListener('change', handleFilter);
+
+            // Delegasi Event Klik (Chat, Detail, Hapus)
+            tableBody.addEventListener('click', function (e) {
+                const target = e.target.closest('button');
+                if (!target) return;
+
+                if (target.classList.contains('btn-chat')) {
+                    alert('Membuka chat dengan ' + target.dataset.nama);
+                }
+                else if (target.classList.contains('btn-detail')) {
+                    alert('Membuka detail progres ID: ' + target.dataset.id);
+                }
+                else if (target.classList.contains('btn-hapus')) {
+                    const id = target.dataset.id;
+                    if (confirm('Apakah Anda yakin ingin menghapus siswa ini dari daftar aktif?')) {
+                        let data = JSON.parse(localStorage.getItem('daftar_siswa')) || [];
+                        data = data.filter(item => item.id != id);
+                        localStorage.setItem('daftar_siswa', JSON.stringify(data));
+                        loadData(); // Reload tampilan
+                    }
+                }
+            });
+
+            // Sidebar Mobile Toggle
+            const btnMenu = document.getElementById('btnMenu');
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+
+            btnMenu.addEventListener('click', () => {
+                sidebar.classList.add('active');
+                overlay.classList.add('active');
+            });
+
+            overlay.addEventListener('click', () => {
+                sidebar.classList.remove('active');
+                overlay.classList.remove('active');
+            });
+
+            // Utility: Generate warna random berdasarkan nama agar avatar bervariasi
+            function stringToColor(str) {
+                let hash = 0;
+                for (let i = 0; i < str.length; i++) {
+                    hash = str.charCodeAt(i) + ((hash << 5) - hash);
+                }
+                const colors = ['#0d6efd', '#fd7e14', '#198754', '#6f42c1', '#0dcaf0'];
+                return colors[Math.abs(hash) % colors.length];
+            }
+
+            // Inisialisasi awal
+            loadData();
+        });
+    </script>
+</body>
+
+</html>

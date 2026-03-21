@@ -1,0 +1,375 @@
+/* ================================================
+   login.css — Semua styling untuk halaman login
+   SobatPelajar
+   ================================================ */
+
+/* ── VARIABEL WARNA
+   Disimpan di :root supaya mudah diganti di satu tempat.
+   Cara pakai: var(--biru)
+   ── */
+:root {
+  --biru:   #1565C0;
+  --oranye: #FF6B2B;
+}
+
+/* ── BODY
+   min-height + flex supaya konten selalu
+   memenuhi tinggi layar meski isinya sedikit
+   ── */
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #F4F7FC;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+/* ── WRAPPER UTAMA
+   Membagi halaman menjadi dua sisi (kiri & kanan)
+   ── */
+.halaman-login {
+  flex: 1;
+  display: flex;
+}
+
+
+/* ================================================
+   SISI KIRI — Panel informasi
+   ================================================ */
+.sisi-kiri {
+  width: 45%;
+  background: linear-gradient(145deg, #0D3B6E, var(--biru));
+  padding: 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: white;
+}
+
+/* Sembunyikan sisi kiri di layar kecil (mobile/tablet) */
+@media (max-width: 991px) {
+  .sisi-kiri {
+    display: none;
+  }
+}
+
+.sisi-kiri .brand {
+  font-weight: 700;
+  font-size: 1.6rem;
+}
+.sisi-kiri .brand span {
+  color: var(--oranye);
+}
+
+.sisi-kiri h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+.sisi-kiri p {
+  opacity: 0.8;
+  margin-top: 10px;
+  line-height: 1.7;
+}
+
+/* Item fitur di sisi kiri */
+.item-fitur {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 20px;
+}
+.ikon-fitur {
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+.item-fitur span {
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+.sisi-kiri .catatan-bawah {
+  opacity: 0.5;
+  font-size: 0.82rem;
+}
+
+
+/* ================================================
+   SISI KANAN — Form login
+   ================================================ */
+.sisi-kanan {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+}
+
+/* Kartu putih tempat form berada */
+.kartu-login {
+  background: white;
+  border-radius: 20px;
+  padding: 40px;
+  width: 100%;
+  max-width: 440px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* Di layar sangat kecil, kurangi padding kartu */
+@media (max-width: 480px) {
+  .kartu-login {
+    padding: 28px 20px;
+  }
+}
+
+/* Link kembali ke beranda */
+.link-kembali {
+  color: #6B7280;
+  text-decoration: none;
+  font-size: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 24px;
+}
+.link-kembali:hover {
+  color: var(--biru);
+}
+
+.judul-form {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #1A1A2E;
+}
+.sub-judul {
+  color: #6B7280;
+  font-size: 0.9rem;
+  margin-top: 4px;
+}
+.sub-judul a {
+  color: var(--biru);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+
+/* ================================================
+   TAB PERAN (Siswa / Tutor)
+   ================================================ */
+.tab-peran {
+  display: flex;
+  background: #F4F7FC;
+  border-radius: 12px;
+  padding: 4px;
+  margin: 24px 0;
+}
+
+.tab {
+  flex: 1;
+  text-align: center;
+  padding: 9px;
+  border-radius: 9px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #6B7280;
+  cursor: pointer;
+  transition: 0.2s;
+  /* Hapus default style tombol */
+  border: none;
+  background: none;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Tab yang sedang aktif */
+.tab.aktif {
+  background: white;
+  color: var(--biru);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+/* ================================================
+   INPUT FORM
+   ================================================ */
+.form-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #1A1A2E;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.form-control {
+  border: 1.5px solid #E5E9F2;
+  border-radius: 10px;
+  padding: 11px 14px;
+  font-size: 0.92rem;
+  font-family: 'Poppins', sans-serif;
+  width: 100%;
+  transition: 0.2s;
+  outline: none;
+  box-sizing: border-box;
+}
+
+/* Efek saat input sedang difokus */
+.form-control:focus {
+  border-color: var(--biru);
+  box-shadow: 0 0 0 3px rgba(21, 101, 192, 0.1);
+}
+
+/* Input yang tidak valid / error */
+.form-control.error {
+  border-color: #EF4444;
+}
+
+/* Pesan error di bawah input */
+.pesan-error {
+  font-size: 0.78rem;
+  color: #EF4444;
+  margin-top: 4px;
+  display: none; /* tersembunyi sampai diperlukan */
+}
+
+/* Wrapper input password (untuk tombol show/hide) */
+.grup-password {
+  position: relative;
+}
+.grup-password .form-control {
+  /* Beri ruang di kanan untuk tombol mata */
+  padding-right: 44px;
+}
+
+/* Tombol show/hide password */
+.tombol-lihat {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #9CA3AF;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0;
+}
+.tombol-lihat:hover {
+  color: var(--biru);
+}
+
+/* Link lupa password */
+.link-lupa {
+  color: var(--biru);
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+.link-lupa:hover {
+  color: var(--oranye);
+}
+
+
+/* ================================================
+   TOMBOL MASUK
+   ================================================ */
+.btn-masuk-utama {
+  background: var(--biru);
+  color: white;
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  width: 100%;
+  cursor: pointer;
+  transition: 0.2s;
+  font-family: 'Poppins', sans-serif;
+}
+.btn-masuk-utama:hover {
+  background: #1976D2;
+  transform: translateY(-1px);
+}
+.btn-masuk-utama:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+
+/* ================================================
+   PEMISAH "atau"
+   ================================================ */
+.pembatas {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 18px 0;
+  color: #9CA3AF;
+  font-size: 0.82rem;
+}
+/* Garis di kiri dan kanan teks "atau" */
+.pembatas::before,
+.pembatas::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #E5E9F2;
+}
+
+
+/* ================================================
+   TOMBOL GOOGLE
+   ================================================ */
+.btn-google {
+  width: 100%;
+  border: 1.5px solid #E5E9F2;
+  border-radius: 10px;
+  padding: 11px;
+  background: white;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: 0.2s;
+}
+.btn-google:hover {
+  background: #F4F7FC;
+  border-color: var(--biru);
+}
+
+
+/* ================================================
+   KOTAK ALERT ERROR
+   ================================================ */
+.kotak-alert {
+  background: #FEF2F2;
+  color: #DC2626;
+  border-radius: 10px;
+  padding: 11px 14px;
+  font-size: 0.85rem;
+  margin-bottom: 16px;
+  display: none; /* tersembunyi secara default */
+}
+
+/* Catatan kecil di bawah form */
+.catatan-form {
+  text-align: center;
+  font-size: 0.78rem;
+  color: #9CA3AF;
+  margin-top: 20px;
+}
+.catatan-form a {
+  color: var(--biru);
+  text-decoration: none;
+}
