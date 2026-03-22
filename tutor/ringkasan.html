@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ringkasan Mentor – SobatPelajar</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="../css/mentor/style.css" />
+  <style>
+
+  </style>
+</head>
+
+<body>
+  <div class="overlay" id="overlay"></div>
+
+  <div class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-brand">
+        <div class="nama">Sobat<span>Pelajar</span></div>
+        <div class="peran">Ringkasan Mentor</div>
+      </div>
+
+      <nav class="sidebar-menu">
+        <div class="menu-label">Menu Utama</div>
+        <a href="ringkasan.html" class="menu-item aktif"><i class="fa fa-th-large"></i>Ringkasan</a>
+        <a href="kelola_pesanan.html" class="menu-item"><i class="fa-solid fa-bag-shopping"></i>Kelola Pesanan</a>
+        <a href="jadwal_mengajar.html" class="menu-item"><i class="fa fa-calendar"></i>Jadwal Mengajar</a>
+        <a href="daftar_siswa.html" class="menu-item"><i class="fa fa-users"></i>Daftar Siswa</a>
+        <a href="upload_materi.html" class="menu-item"><i class="fa fa-upload"></i>Upload Materi</a>
+        <a href="kelas.html" class="menu-item"><i class="fa fa-plus-circle"></i>Tambah/Ubah Kelas</a>
+
+        <div class="menu-label" style="margin-top:8px;">Akun</div>
+        <a href="profil.html" class="menu-item"><i class="fa fa-user-circle"></i>Profil</a>
+        <a href="pendapatan.html" class="menu-item"><i class="fa fa-wallet"></i>Pendapatan</a>
+      </nav>
+
+      <div class="sidebar-bawah">
+        <div class="info-user">
+          <div id="sideAvatar" class="avatar-user">M</div>
+          <div>
+            <div id="sideNama" class="nama-user">Memuat...</div>
+            <div id="sideEmail" class="email-user">Memuat...</div>
+          </div>
+        </div>
+        <a href="login.html" class="btn-keluar"><i class="fa fa-sign-out-alt me-1"></i>Keluar</a>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <div class="topbar">
+        <div class="d-flex align-items-center">
+          <button class="btn-hamburger me-3 d-lg-none" id="btnMenu"><i class="fa fa-bars"></i></button>
+          <div>
+            <div class="judul-halaman">Ringkasan</div>
+            <div class="sub-judul-halaman" id="currentDate">Memuat tanggal...</div>
+          </div>
+        </div>
+        <div class="topbar-kanan d-flex align-items-center gap-3">
+          <div class="notif-btn">🔔<span class="notif-badge">3</span></div>
+          <div id="topAvatar" class="avatar-user"
+            style="width:36px;height:36px;font-size:.85rem;background:var(--biru);">M</div>
+        </div>
+      </div>
+
+      <div class="area-halaman">
+        <div class="row g-3 mb-4">
+          <div class="col-6 col-lg-3">
+            <div class="kartu-stat">
+              <div class="label-stat">Pendapatan</div>
+              <div id="statPendapatan" class="angka-stat">Rp 0</div>
+              <div class="trend-stat trend-naik">↑ Saldo Aktif</div>
+            </div>
+          </div>
+          <div class="col-6 col-lg-3">
+            <div class="kartu-stat">
+              <div class="label-stat">Siswa Aktif</div>
+              <div id="statSiswa" class="angka-stat">0</div>
+              <div class="trend-stat trend-naik">↑ Total Belajar</div>
+            </div>
+          </div>
+          <div class="col-6 col-lg-3">
+            <div class="kartu-stat">
+              <div class="label-stat">Total Sesi</div>
+              <div id="statSesi" class="angka-stat">0</div>
+              <div class="trend-stat text-muted">Bulan ini</div>
+            </div>
+          </div>
+          <div class="col-6 col-lg-3">
+            <div class="kartu-stat">
+              <div class="label-stat">Rating</div>
+              <div id="statRating" class="angka-stat">0.0</div>
+              <div class="trend-stat trend-naik">⭐ Kepuasan Siswa</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-lg-7">
+            <div class="kartu">
+              <div class="kartu-header">
+                <span class="kartu-judul"><i class="fa fa-shopping-cart me-2 text-primary"></i>Pesanan Baru</span>
+              </div>
+              <div class="table-responsive">
+                <table class="tabel">
+                  <thead>
+                    <tr>
+                      <th>Siswa</th>
+                      <th>Materi</th>
+                      <th>Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tabelPesanan">
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-5">
+            <div class="kartu">
+              <div class="kartu-header">
+                <span class="kartu-judul"><i class="fa fa-clock me-2 text-primary"></i>Sesi Terdekat</span>
+              </div>
+              <div class="kartu-body" id="listJadwal">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // 1. UPDATE TANGGAL OTOMATIS
+      const updateTime = () => {
+        const now = new Date();
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('currentDate').innerText = now.toLocaleDateString('id-ID', options);
+      };
+      updateTime();
+
+      // 2. AMBIL DATA DARI LOCALSTORAGE
+      const profil = JSON.parse(localStorage.getItem('user_profil')) || {
+        nama: "Mentor Baru",
+        email: "mentor@sobatpelajar.com"
+      };
+
+      // Simulasi data statistik jika belum ada di localStorage
+      const stats = JSON.parse(localStorage.getItem('mentor_stats')) || {
+        pendapatan: "2.450.000",
+        siswa: "12",
+        sesi: "48",
+        rating: "4.9"
+      };
+
+      // 3. RENDER DATA KE HTML
+      // Profil Sidebar & Topbar
+      document.getElementById('sideNama').innerText = profil.nama;
+      document.getElementById('sideEmail').innerText = profil.email;
+      const initial = profil.nama.charAt(0).toUpperCase();
+      document.getElementById('sideAvatar').innerText = initial;
+      document.getElementById('topAvatar').innerText = initial;
+
+      // Statistik
+      document.getElementById('statPendapatan').innerText = `Rp ${parseInt(stats.pendapatan).toLocaleString('id-ID')}`;
+      document.getElementById('statSiswa').innerText = stats.siswa;
+      document.getElementById('statSesi').innerText = stats.sesi;
+      document.getElementById('statRating').innerText = stats.rating;
+
+      // 4. RENDER TABEL PESANAN (Contoh Statis yang bisa kamu kembangkan nanti)
+      const tabelPesanan = document.getElementById('tabelPesanan');
+      tabelPesanan.innerHTML = `
+                <tr>
+                    <td><div class="fw-bold small">Rizky A.</div><div class="extra-small text-muted">Kelas 12</div></td>
+                    <td><span class="badge badge-biru">Matematika</span></td>
+                    <td>
+                        <button class="btn-aksi text-success bg-success-subtle me-1"><i class="fa fa-check"></i></button>
+                        <button class="btn-aksi text-danger bg-danger-subtle"><i class="fa fa-times"></i></button>
+                    </td>
+                </tr>
+            `;
+
+      // 5. RENDER JADWAL TERDEKAT
+      const listJadwal = document.getElementById('listJadwal');
+      listJadwal.innerHTML = `
+                <div class="jadwal-item">
+                    <div class="jadwal-waktu"><div class="jam">14:00</div><div class="tgl">Hari ini</div></div>
+                    <div class="jadwal-garis bg-primary"></div>
+                    <div class="jadwal-info">
+                        <div class="jadwal-mapel">Fisika Dasar</div>
+                        <div class="jadwal-mentor">Sinta W.</div>
+                    </div>
+                    <span class="badge badge-biru">Live</span>
+                </div>
+            `;
+
+      // 6. LOGIKA SIDEBAR MOBILE
+      const btnMenu = document.getElementById('btnMenu');
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('overlay');
+
+      if (btnMenu) {
+        btnMenu.onclick = () => {
+          sidebar.classList.add('active');
+          overlay.classList.add('active');
+        }
+      }
+      overlay.onclick = () => {
+        sidebar.classList.remove('active');
+        overlay.classList.remove('active');
+      }
+    });
+  </script>
+  
+</body>
+
+</html>

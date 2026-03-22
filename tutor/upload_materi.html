@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Upload Materi Mentor – SobatPelajar</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/mentor/style.css" />
+</head>
+
+<body>
+    <div class="overlay" id="overlay"></div>
+
+    <div class="layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <div class="nama">Sobat<span>Pelajar</span></div>
+                <div class="peran">Upload Materi</div>
+            </div>
+
+            <nav class="sidebar-menu">
+                <div class="menu-label">Menu Utama</div>
+                <a href="ringkasan.html" class="menu-item"><i class="fa fa-th-large"></i>Ringkasan</a>
+                <a href="kelola_pesanan.html" class="menu-item"><i class="fa-solid fa-bag-shopping"></i>Kelola
+                    Pesanan</a>
+                <a href="jadwal_mengajar.html" class="menu-item"><i class="fa fa-calendar"></i>Jadwal Mengajar</a>
+                <a href="daftar_siswa.html" class="menu-item"><i class="fa fa-users"></i>Daftar Siswa</a>
+                <a href="upload_materi.html" class="menu-item aktif"><i class="fa fa-upload"></i>Upload Materi</a>
+                <a href="kelas.html" class="menu-item"><i class="fa fa-plus-circle"></i>Tambah/Ubah Kelas</a>
+
+                <div class="menu-label" style="margin-top:8px;">Akun</div>
+                <a href="profil.html" class="menu-item"><i class="fa fa-user-circle"></i>Profil</a>
+                <a href="pendapatan.html" class="menu-item"><i class="fa fa-wallet"></i>Pendapatan</a>
+            </nav>
+
+            <div class="sidebar-bawah">
+                <div class="info-user">
+                    <div class="avatar-user">B</div>
+                    <div>
+                        <div class="nama-user">Budi Santoso</div>
+                        <div class="email-user">budi@email.com</div>
+                    </div>
+                </div>
+                <a href="login.html" class="btn-keluar"><i class="fa fa-sign-out-alt me-1"></i>Keluar</a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="topbar">
+                <div class="d-flex align-items-center">
+                    <button class="btn-hamburger me-3 d-lg-none" id="btnMenu"><i class="fa fa-bars"></i></button>
+                    <div>
+                        <div class="judul-halaman">Upload Materi</div>
+                        <div class="sub-judul-halaman">Bagikan modul dan tugas kepada siswa Anda.</div>
+                    </div>
+                </div>
+                <div class="topbar-kanan d-flex align-items-center gap-3">
+                    <div class="header-actions d-none d-sm-block">
+                        <span id="quotaBadge" class="badge bg-warning text-dark p-2 px-3 rounded-pill">
+                            <i class="fa fa-database me-1"></i> Sisa Kuota: 2.0 GB
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="area-halaman">
+                <div class="row g-4">
+                    <div class="col-lg-5">
+                        <div class="card border-0 shadow-sm p-4">
+                            <h5 class="fw-bold mb-4">Unggah Baru</h5>
+                            <form id="formUpload">
+                                <div class="mb-3">
+                                    <label class="form-label small fw-bold">Judul Materi</label>
+                                    <input type="text" id="judulMateri" class="form-control rounded-3"
+                                        placeholder="Contoh: Modul Trigonometri Dasar" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label small fw-bold">Tujuan Siswa</label>
+                                    <select id="selectSiswa" class="form-select rounded-3" required>
+                                        <option value="" disabled selected>Pilih Siswa...</option>
+                                        <option value="Semua Siswa">Semua Siswa</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label small fw-bold">Pilih File</label>
+                                    <div class="upload-box" id="dropZone"
+                                        onclick="document.getElementById('fileInput').click()">
+                                        <i class="fa fa-cloud-arrow-up fs-2 text-primary mb-2"></i>
+                                        <p class="mb-1 fw-medium" id="fileNameDisplay">Klik untuk pilih file</p>
+                                        <p class="extra-small text-muted">PDF, DOCX, atau PPTX (Maks. 20MB)</p>
+                                        <input type="file" id="fileInput" class="d-none" accept=".pdf,.docx,.pptx">
+                                    </div>
+                                </div>
+
+                                <div class="progress progress-upload mb-3" id="progContainer">
+                                    <div id="progBar" class="progress-bar progress-bar-striped progress-bar-animated"
+                                        style="width: 0%"></div>
+                                </div>
+
+                                <button type="submit" id="btnKirim"
+                                    class="btn btn-primary w-100 rounded-pill py-2">Kirim ke Siswa</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-7">
+                        <div class="card border-0 shadow-sm overflow-hidden">
+                            <div class="p-4 bg-white border-bottom d-flex justify-content-between align-items-center">
+                                <h5 class="fw-bold mb-0">Riwayat Unggahan</h5>
+                                <button onclick="hapusSemuaRiwayat()" class="btn btn-sm btn-outline-danger border-0"><i
+                                        class="fa fa-eraser me-1"></i>Bersihkan</button>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-hover align-middle mb-0">
+                                    <thead class="bg-light">
+                                        <tr>
+                                            <th class="ps-4">File</th>
+                                            <th>Dikirim Ke</th>
+                                            <th>Tanggal</th>
+                                            <th class="text-center">Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="riwayatTableBody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('formUpload');
+            const selectSiswa = document.getElementById('selectSiswa');
+            const fileInput = document.getElementById('fileInput');
+            const fileNameDisplay = document.getElementById('fileNameDisplay');
+            const riwayatTableBody = document.getElementById('riwayatTableBody');
+            const progContainer = document.getElementById('progContainer');
+            const progBar = document.getElementById('progBar');
+            const btnKirim = document.getElementById('btnKirim');
+
+            // 1. Dropdown Siswa Otomatis dari Kelola Pesanan
+            function loadSiswaDropdown() {
+                const listSiswa = JSON.parse(localStorage.getItem('daftar_siswa')) || [];
+                listSiswa.forEach(siswa => {
+                    const option = document.createElement('option');
+                    option.value = siswa.nama;
+                    option.textContent = `${siswa.nama} (${siswa.sekolah})`;
+                    selectSiswa.appendChild(option);
+                });
+            }
+
+            // 2. Hitung Kuota Dinamis
+            function updateQuotaUI() {
+                const riwayat = JSON.parse(localStorage.getItem('riwayat_materi')) || [];
+                const maxQuotaMB = 2048; // Total 2GB
+                let totalUsedKB = 0;
+
+                // Hitung semua file di riwayat
+                riwayat.forEach(item => {
+                    totalUsedKB += parseFloat(item.ukuran);
+                });
+
+                const totalUsedMB = totalUsedKB / 1024;
+                const remainingMB = maxQuotaMB - totalUsedMB;
+
+                // Tampilkan 2 angka di belakang koma agar pergerakannya kelihatan
+                const remainingGB = (remainingMB / 1024).toFixed(2);
+
+                const badge = document.getElementById('quotaBadge');
+
+                // Update teks: Jika di bawah 1GB, tampilkan MB saja supaya lebih detail
+                if (remainingMB < 1024) {
+                    badge.innerHTML = `<i class="fa fa-database me-1"></i> Sisa Kuota: ${remainingMB.toFixed(0)} MB`;
+                } else {
+                    badge.innerHTML = `<i class="fa fa-database me-1"></i> Sisa Kuota: ${remainingGB} GB`;
+                }
+
+                // Ganti warna jika kritis
+                if (remainingMB < 500) {
+                    badge.className = "badge bg-danger text-white p-2 px-3 rounded-pill";
+                } else {
+                    badge.className = "badge bg-warning text-dark p-2 px-3 rounded-pill";
+                }
+            }
+
+            // 3. Tampilkan Nama File saat dipilih
+            fileInput.addEventListener('change', function () {
+                if (this.files.length > 0) {
+                    fileNameDisplay.textContent = this.files[0].name;
+                    fileNameDisplay.classList.add('text-primary');
+                }
+            });
+
+            // 4. Render Tabel Riwayat
+            function loadRiwayat() {
+                const riwayat = JSON.parse(localStorage.getItem('riwayat_materi')) || [];
+                riwayatTableBody.innerHTML = riwayat.map((materi, index) => `
+                    <tr>
+                        <td class="ps-4">
+                            <div class="d-flex align-items-center">
+                                <i class="fa ${getFileIcon(materi.file)} ${getFileColor(materi.file)} fs-4 me-3"></i>
+                                <div>
+                                    <div class="fw-bold small">${materi.judul}</div>
+                                    <div class="extra-small text-muted">${(materi.ukuran / 1024).toFixed(1)} MB</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td><span class="badge ${materi.tujuan === 'Semua Siswa' ? 'bg-secondary-subtle text-secondary' : 'bg-info-subtle text-info'}">${materi.tujuan}</span></td>
+                        <td><div class="extra-small">${materi.tanggal}</div></td>
+                        <td class="text-center">
+                            <button onclick="hapusMateri(${index})" class="btn btn-light btn-sm text-danger"><i class="fa fa-trash"></i></button>
+                        </td>
+                    </tr>
+                `).join('');
+
+                if (riwayat.length === 0) {
+                    riwayatTableBody.innerHTML = '<tr><td colspan="4" class="text-center p-4 text-muted">Belum ada riwayat unggahan</td></tr>';
+                }
+                updateQuotaUI();
+            }
+
+            function getFileIcon(fn) {
+                if (fn.includes('.pdf')) return 'fa-file-pdf';
+                if (fn.includes('.docx')) return 'fa-file-word';
+                return 'fa-file-powerpoint';
+            }
+
+            function getFileColor(fn) {
+                if (fn.includes('.pdf')) return 'text-danger';
+                if (fn.includes('.docx')) return 'text-primary';
+                return 'text-warning';
+            }
+
+            // 5. Proses Simpan (Simulasi Upload)
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+                const file = fileInput.files[0];
+                if (!file) return alert("Pilih file!");
+
+                // Animasi Loading
+                btnKirim.disabled = true;
+                progContainer.style.display = 'block';
+                let width = 0;
+                let interval = setInterval(() => {
+                    if (width >= 100) {
+                        clearInterval(interval);
+                        simpanData(file);
+                    } else {
+                        width += 10;
+                        progBar.style.width = width + '%';
+                    }
+                }, 100);
+            });
+
+            function simpanData(file) {
+                const materiBaru = {
+                    judul: document.getElementById('judulMateri').value,
+                    tujuan: selectSiswa.value,
+                    file: file.name,
+                    ukuran: (file.size / 1024), // simpan dalam KB
+                    tanggal: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })
+                };
+
+                const riwayat = JSON.parse(localStorage.getItem('riwayat_materi')) || [];
+                riwayat.unshift(materiBaru);
+                localStorage.setItem('riwayat_materi', JSON.stringify(riwayat));
+
+                // Reset UI
+                progContainer.style.display = 'none';
+                progBar.style.width = '0%';
+                btnKirim.disabled = false;
+                form.reset();
+                fileNameDisplay.textContent = "Klik untuk pilih file";
+
+                loadRiwayat();
+            }
+
+            window.hapusMateri = function (index) {
+                let riwayat = JSON.parse(localStorage.getItem('riwayat_materi')) || [];
+                riwayat.splice(index, 1);
+                localStorage.setItem('riwayat_materi', JSON.stringify(riwayat));
+                loadRiwayat();
+            }
+
+            window.hapusSemuaRiwayat = function () {
+                if (confirm("Hapus semua riwayat?")) {
+                    localStorage.removeItem('riwayat_materi');
+                    loadRiwayat();
+                }
+            }
+
+            // Sidebar Toggle
+            document.getElementById('btnMenu').onclick = () => {
+                document.getElementById('sidebar').classList.add('active');
+                document.getElementById('overlay').classList.add('active');
+            }
+            document.getElementById('overlay').onclick = () => {
+                document.getElementById('sidebar').classList.remove('active');
+                document.getElementById('overlay').classList.remove('active');
+            }
+
+            loadSiswaDropdown();
+            loadRiwayat();
+        });
+    </script>
+
+</body>
+
+</html>

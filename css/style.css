@@ -1,0 +1,269 @@
+/* ================================================
+   style.css — Styling untuk halaman utama (index)
+   SobatPelajar
+   ================================================ */
+
+/* ── VARIABEL WARNA GLOBAL ── */
+:root {
+  --biru:   #1565C0;
+  --oranye: #FF6B2B;
+}
+
+/* ── BODY ── */
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+
+/* ================================================
+   NAVBAR
+   ================================================ */
+.navbar {
+  background-color: white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.navbar-brand {
+  font-weight: 700;
+  font-size: 1.4rem;
+  color: var(--biru) !important;
+}
+.navbar-brand span {
+  color: var(--oranye);
+}
+.btn-masuk {
+  border: 2px solid var(--biru);
+  color: var(--biru);
+  border-radius: 8px;
+  font-weight: 600;
+  padding: 6px 18px;
+  text-decoration: none;
+}
+.btn-masuk:hover {
+  background-color: var(--biru);
+  color: white;
+}
+.btn-daftar {
+  background-color: var(--oranye);
+  color: white;
+  border-radius: 8px;
+  font-weight: 600;
+  padding: 6px 18px;
+  text-decoration: none;
+}
+.btn-daftar:hover {
+  background-color: #e85a1f;
+  color: white;
+}
+
+
+/* ================================================
+   HERO SECTION
+   ================================================ */
+.hero {
+  background: linear-gradient(135deg, #0D3B6E, #1565C0);
+  color: white;
+  padding: 80px 0;
+}
+.hero h1 {
+  font-size: 2.4rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+.hero h1 span {
+  color: var(--oranye);
+}
+.hero p {
+  font-size: 1rem;
+  opacity: 0.85;
+  margin-top: 12px;
+}
+.btn-hero {
+  background-color: var(--oranye);
+  color: white;
+  font-weight: 600;
+  padding: 12px 28px;
+  border-radius: 10px;
+  border: none;
+  margin-top: 24px;
+  display: inline-block;
+  text-decoration: none;
+}
+.btn-hero:hover {
+  background-color: #e85a1f;
+  color: white;
+}
+.kotak-stat {
+  background: rgba(255,255,255,0.12);
+  border-radius: 14px;
+  padding: 20px 10px;
+  text-align: center;
+}
+.kotak-stat .angka {
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+.kotak-stat .label {
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+
+
+/* ================================================
+   SEKSI UMUM
+   ================================================ */
+section {
+  padding: 60px 0;
+}
+.judul-seksi {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #1A1A2E;
+}
+.judul-seksi span {
+  color: var(--oranye);
+}
+.sub-seksi {
+  color: #6B7280;
+  font-size: 0.95rem;
+  margin-bottom: 40px;
+}
+
+
+/* ================================================
+   KARTU LANGKAH (Cara Kerja)
+   ================================================ */
+.kartu-langkah {
+  background: white;
+  border: 1.5px solid #E8EEF8;
+  border-radius: 16px;
+  padding: 28px;
+  height: 100%;
+}
+.nomor-langkah {
+  width: 44px;
+  height: 44px;
+  background-color: var(--biru);
+  color: white;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+.kartu-langkah h5 {
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.kartu-langkah p {
+  color: #6B7280;
+  font-size: 0.9rem;
+}
+
+
+/* ================================================
+   KARTU TUTOR
+   ================================================ */
+.kartu-tutor {
+  background: white;
+  border: 1.5px solid #E8EEF8;
+  border-radius: 16px;
+  padding: 24px;
+  text-align: center;
+  height: 100%;
+}
+.avatar-tutor {
+  font-size: 2.5rem;
+  margin-bottom: 12px;
+}
+.nama-tutor {
+  font-weight: 700;
+  font-size: 1rem;
+}
+.info-tutor {
+  color: #6B7280;
+  font-size: 0.82rem;
+}
+.harga-tutor {
+  color: var(--oranye);
+  font-weight: 700;
+  margin-top: 10px;
+}
+.badge-mapel {
+  background: #EFF6FF;
+  color: var(--biru);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+  display: inline-block;
+  margin: 3px 2px;
+}
+
+
+/* ================================================
+   CTA (Call To Action)
+   ================================================ */
+.cta {
+  background: linear-gradient(135deg, #0D3B6E, #1565C0);
+  color: white;
+  padding: 60px 0;
+  text-align: center;
+}
+.cta h2 {
+  font-size: 2rem;
+  font-weight: 700;
+}
+.cta p {
+  opacity: 0.8;
+  margin-top: 8px;
+}
+.btn-cta-tutor {
+  background: rgba(255,255,255,0.15);
+  color: white;
+  border: 2px solid rgba(255,255,255,0.4);
+  padding: 12px 24px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 600;
+}
+.btn-cta-tutor:hover {
+  background: rgba(255,255,255,0.25);
+  color: white;
+}
+
+
+/* ================================================
+   FOOTER
+   ================================================ */
+footer {
+  background-color: #0D3B6E;
+  color: rgba(255,255,255,0.65);
+  padding: 40px 0 20px;
+  font-size: 0.88rem;
+}
+footer .brand {
+  color: white;
+  font-weight: 700;
+  font-size: 1.3rem;
+}
+footer .brand span {
+  color: var(--oranye);
+}
+footer a {
+  color: rgba(255,255,255,0.6);
+  text-decoration: none;
+  display: block;
+  margin-bottom: 6px;
+}
+footer a:hover {
+  color: var(--oranye);
+}
+footer h6 {
+  color: white;
+  font-weight: 700;
+  margin-bottom: 14px;
+}

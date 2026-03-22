@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profil Mentor – SobatPelajar</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/mentor/style.css" />
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <div class="overlay" id="overlay"></div>
+
+    <div class="layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <div class="nama">Sobat<span>Pelajar</span></div>
+                <div class="peran">Profil Mentor</div>
+            </div>
+
+            <nav class="sidebar-menu">
+                <div class="menu-label">Menu Utama</div>
+                <a href="ringkasan.html" class="menu-item"><i class="fa fa-th-large"></i>Ringkasan</a>
+                <a href="kelola_pesanan.html" class="menu-item"><i class="fa-solid fa-bag-shopping"></i>Kelola
+                    Pesanan</a>
+                <a href="jadwal_mengajar.html" class="menu-item"><i class="fa fa-calendar"></i>Jadwal Mengajar</a>
+                <a href="daftar_siswa.html" class="menu-item"><i class="fa fa-users"></i>Daftar Siswa</a>
+                <a href="upload_materi.html" class="menu-item"><i class="fa fa-upload"></i>Upload Materi</a>
+                <a href="kelas.html" class="menu-item"><i class="fa fa-plus-circle"></i>Tambah/Ubah Kelas</a>
+
+                <div class="menu-label" style="margin-top:8px;">Akun</div>
+                <a href="profil.html" class="menu-item aktif"><i class="fa fa-user-circle"></i>Profil</a>
+                <a href="pendapatan.html" class="menu-item"><i class="fa fa-wallet"></i>Pendapatan</a>
+            </nav>
+
+            <div class="sidebar-bawah">
+                <div class="info-user">
+                    <div id="sideAvatar" class="avatar-user">B</div>
+                    <div>
+                        <div id="sideNama" class="nama-user">Budi Santoso</div>
+                        <div id="sideEmail" class="email-user">budi@email.com</div>
+                    </div>
+                </div>
+                <a href="login.html" class="btn-keluar"><i class="fa fa-sign-out-alt me-1"></i>Keluar</a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="topbar">
+                <div class="d-flex align-items-center">
+                    <button class="btn-hamburger me-3 d-lg-none" id="btnMenu"><i class="fa fa-bars"></i></button>
+                    <div>
+                        <div class="judul-halaman">Profil Saya</div>
+                        <div class="sub-judul-halaman">Kelola data diri dan kredensial Anda.</div>
+                    </div>
+                </div>
+                <div class="topbar-kanan">
+                    <button type="button" onclick="simpanProfil()"
+                        class="btn btn-primary btn-sm rounded-pill px-4 shadow-sm">Simpan Perubahan</button>
+                </div>
+            </div>
+
+            <div class="area-halaman">
+                <div class="row g-4">
+                    <div class="col-lg-4">
+                        <div class="card border-0 shadow-sm p-4 text-center">
+                            <div class="position-relative d-inline-block mx-auto mb-3">
+                                <div id="mainAvatar" class="avatar-circle"
+                                    style="width: 120px; height: 120px; font-size: 3.5rem; background: #e7f1ff; color: #0d6efd;">
+                                    B</div>
+                                <div class="btn-edit-avatar"><i class="fa fa-camera"></i></div>
+                            </div>
+                            <h5 id="previewNama" class="fw-bold mb-1">Budi Santoso, S.Pd.</h5>
+                            <p id="previewTagline" class="text-muted extra-small mb-4">Mentor Matematika & Fisika</p>
+
+                            <div class="row g-2 mb-4">
+                                <div class="col-6">
+                                    <div class="profile-stat-box"><span class="profile-stat-value">4.9</span><span
+                                            class="profile-stat-label">Rating</span></div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="profile-stat-box"><span class="profile-stat-value">124</span><span
+                                            class="profile-stat-label">Sesi Selesai</span></div>
+                                </div>
+                            </div>
+
+                            <div class="text-start">
+                                <label class="extra-small fw-bold text-muted mb-2">LINK PROFIL PUBLIK</label>
+                                <div class="input-group shadow-sm">
+                                    <input type="text" id="linkProfil"
+                                        class="form-control form-control-sm bg-light border-0"
+                                        value="sobatpelajar.id/m/budi-s" readonly>
+                                    <button onclick="copyLink()" class="btn btn-white btn-sm border-0"><i
+                                            class="fa fa-copy text-primary"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-8">
+                        <div class="card border-0 shadow-sm p-4">
+                            <h5 class="fw-bold mb-4">Informasi Dasar</h5>
+                            <form id="formProfil" class="row g-3">
+                                <div class="col-md-6"><label class="form-label extra-small fw-bold">NAMA
+                                        LENGKAP</label><input type="text" id="inputNama" class="form-control"
+                                        placeholder="Nama Lengkap"></div>
+                                <div class="col-md-6"><label class="form-label extra-small fw-bold">GELAR
+                                        AKADEMIK</label><input type="text" id="inputGelar" class="form-control"
+                                        placeholder="Contoh: S.Pd."></div>
+                                <div class="col-md-6"><label class="form-label extra-small fw-bold">EMAIL</label><input
+                                        type="email" id="inputEmail" class="form-control" readonly></div>
+                                <div class="col-md-6"><label
+                                        class="form-label extra-small fw-bold">WHATSAPP</label><input type="text"
+                                        id="inputWA" class="form-control" placeholder="08xxxx"></div>
+
+                                <div class="col-12 mt-4">
+                                    <h5 class="fw-bold mb-3">Detail Pengajaran</h5>
+                                </div>
+                                <div class="col-12"><label class="form-label extra-small fw-bold">BIO
+                                        SINGKAT</label><textarea id="inputBio" class="form-control" rows="3"
+                                        placeholder="Ceritakan sedikit tentang Anda..."></textarea></div>
+                                <div class="col-md-6"><label
+                                        class="form-label extra-small fw-bold">PENDIDIKAN</label><input type="text"
+                                        id="inputPendidikan" class="form-control"></div>
+                                <div class="col-md-6"><label class="form-label extra-small fw-bold">KEAHLIAN
+                                        UTAMA</label><input type="text" id="inputKeahlian" class="form-control"></div>
+
+                                <div
+                                    class="col-12 mt-5 pt-3 border-top d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <div class="fw-bold small">Keamanan Akun</div>
+                                        <div class="extra-small text-muted">Jaga kerahasiaan kata sandi Anda.</div>
+                                    </div>
+                                    <button type="button" data-bs-toggle="modal" data-bs-target="#modalPassword"
+                                        class="btn btn-outline-danger btn-sm rounded-pill px-3">Ubah Password</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div class="modal fade" id="modalPassword" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="fw-bold">Ubah Kata Sandi</h5><button type="button" class="btn-close"
+                        data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <form id="formGantiPassword">
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold">Password Baru</label>
+                            <div class="input-group">
+                                <input type="password" id="passBaru" class="form-control" required>
+                                <span class="input-group-text" onclick="togglePassword('passBaru', this)"><i
+                                        class="fa fa-eye"></i></span>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold">Konfirmasi Password</label>
+                            <div class="input-group">
+                                <input type="password" id="passKonfirmasi" class="form-control" required>
+                                <span class="input-group-text" onclick="togglePassword('passKonfirmasi', this)"><i
+                                        class="fa fa-eye"></i></span>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 rounded-pill py-2 mt-3 shadow-sm">Simpan
+                            Password Baru</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            loadDataProfil();
+
+            // Handle Ganti Password
+            const formPass = document.getElementById('formGantiPassword');
+            formPass.addEventListener('submit', function (e) {
+                e.preventDefault();
+                const baru = document.getElementById('passBaru').value;
+                const konfirmasi = document.getElementById('passKonfirmasi').value;
+
+                if (baru !== konfirmasi) return alert("Konfirmasi password tidak sesuai!");
+                if (baru.length < 6) return alert("Password minimal 6 karakter!");
+
+                alert("Berhasil! Kata sandi Anda telah diperbarui.");
+                formPass.reset();
+                bootstrap.Modal.getInstance(document.getElementById('modalPassword')).hide();
+            });
+
+            // Hamburger Sidebar
+            const btnMenu = document.getElementById('btnMenu');
+            if (btnMenu) {
+                btnMenu.onclick = () => {
+                    document.getElementById('sidebar').classList.add('active');
+                    document.getElementById('overlay').classList.add('active');
+                }
+            }
+            document.getElementById('overlay').onclick = () => {
+                document.getElementById('sidebar').classList.remove('active');
+                document.getElementById('overlay').classList.remove('active');
+            }
+        });
+
+        // Fungsi Show/Hide Password
+        function togglePassword(inputId, el) {
+            const input = document.getElementById(inputId);
+            const icon = el.querySelector('i');
+            if (input.type === "password") {
+                input.type = "text";
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                input.type = "password";
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        }
+
+        function loadDataProfil() {
+            const profil = JSON.parse(localStorage.getItem('user_profil')) || {
+                nama: "Budi Santoso", gelar: "S.Pd.", email: "budi@email.com",
+                wa: "081234567890", bio: "Lulusan S1 Pendidikan Matematika dengan pengalaman mengajar 5 tahun...",
+                pendidikan: "Universitas Negeri Malang", keahlian: "Kalkulus, Trigonometri, Mekanika"
+            };
+
+            document.getElementById('inputNama').value = profil.nama;
+            document.getElementById('inputGelar').value = profil.gelar;
+            document.getElementById('inputEmail').value = profil.email;
+            document.getElementById('inputWA').value = profil.wa;
+            document.getElementById('inputBio').value = profil.bio;
+            document.getElementById('inputPendidikan').value = profil.pendidikan;
+            document.getElementById('inputKeahlian').value = profil.keahlian;
+
+            updateUIVisual(profil);
+        }
+
+        function updateUIVisual(data) {
+            const initial = data.nama.charAt(0).toUpperCase();
+            document.getElementById('previewNama').innerText = `${data.nama}, ${data.gelar}`;
+            document.getElementById('previewTagline').innerText = `Mentor ${data.keahlian}`;
+            document.getElementById('mainAvatar').innerText = initial;
+            document.getElementById('sideNama').innerText = data.nama;
+            document.getElementById('sideAvatar').innerText = initial;
+        }
+
+        function simpanProfil() {
+            const profilBaru = {
+                nama: document.getElementById('inputNama').value,
+                gelar: document.getElementById('inputGelar').value,
+                email: document.getElementById('inputEmail').value,
+                wa: document.getElementById('inputWA').value,
+                bio: document.getElementById('inputBio').value,
+                pendidikan: document.getElementById('inputPendidikan').value,
+                keahlian: document.getElementById('inputKeahlian').value
+            };
+            localStorage.setItem('user_profil', JSON.stringify(profilBaru));
+            updateUIVisual(profilBaru);
+            alert("Profil Anda berhasil disimpan!");
+        }
+
+        function copyLink() {
+            const input = document.getElementById("linkProfil");
+            input.select();
+            navigator.clipboard.writeText(input.value);
+            alert("Link profil disalin ke clipboard!");
+        }
+    </script>
+    
+</body>
+
+</html>

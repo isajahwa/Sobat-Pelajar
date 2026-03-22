@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jadwal Mengajar Mentor – SobatPelajar</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/mentor/style.css" />
+</head>
+
+<body>
+    <div class="overlay" id="overlay"></div>
+    <div class="layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <div class="nama">Sobat<span>Pelajar</span></div>
+                <div class="peran">Jadwal Mengajar</div>
+            </div>
+            <nav class="sidebar-menu">
+                <div class="menu-label">Menu Utama</div>
+                <a href="ringkasan.html" class="menu-item"><i class="fa fa-th-large"></i>Ringkasan</a>
+                <a href="kelola_pesanan.html" class="menu-item"><i class="fa-solid fa-bag-shopping"></i>Kelola
+                    Pesanan</a>
+                <a href="jadwal_mengajar.html" class="menu-item aktif"><i class="fa fa-calendar"></i>Jadwal Mengajar</a>
+                <a href="daftar_siswa.html" class="menu-item"><i class="fa fa-users"></i>Daftar Siswa</a>
+                <a href="upload_materi.html" class="menu-item"><i class="fa fa-upload"></i>Upload Materi</a>
+                <a href="kelas.html" class="menu-item"><i class="fa fa-plus-circle"></i>Tambah/Ubah Kelas</a>
+                <div class="menu-label" style="margin-top:8px;">Akun</div>
+                <a href="profil.html" class="menu-item"><i class="fa fa-user-circle"></i>Profil</a>
+                <a href="pendapatan.html" class="menu-item"><i class="fa fa-wallet"></i>Pendapatan</a>
+            </nav>
+            <div class="sidebar-bawah">
+                <div class="info-user">
+                    <div class="avatar-user">B</div>
+                    <div>
+                        <div class="nama-user">Budi Santoso</div>
+                        <div class="email-user">budi@email.com</div>
+                    </div>
+                </div>
+                <a href="login.html" class="btn-keluar"><i class="fa fa-sign-out-alt me-1"></i>Keluar</a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="topbar">
+                <div>
+                    <div class="judul-halaman">Jadwal Mengajar</div>
+                    <div class="sub-judul-halaman">Atur dan lihat agenda mengajar Anda.</div>
+                </div>
+                <div id="statsMingguan"></div>
+            </div>
+
+            <div class="area-halaman">
+                <div class="row g-4">
+                    <div class="col-lg-8">
+                        <div class="card border-0 shadow-sm p-4 h-100">
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <h5 class="fw-bold mb-0" id="currentMonthYear">Maret 2026</h5>
+                                <div class="btn-group shadow-sm">
+                                    <button onclick="prevMonth()" class="btn btn-white btn-sm border"><i
+                                            class="fa fa-chevron-left"></i></button>
+                                    <button onclick="goToToday()" class="btn btn-white btn-sm border">Hari Ini</button>
+                                    <button onclick="nextMonth()" class="btn btn-white btn-sm border"><i
+                                            class="fa fa-chevron-right"></i></button>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-bordered calendar-table text-center"
+                                    style="min-width: 600px; table-layout: fixed;">
+                                    <thead>
+                                        <tr>
+                                            <th>Sen</th>
+                                            <th>Sel</th>
+                                            <th>Rab</th>
+                                            <th>Kam</th>
+                                            <th>Jum</th>
+                                            <th>Sab</th>
+                                            <th>Min</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="calendarBody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="card border-0 shadow-sm p-4 h-100">
+                            <h5 class="fw-bold mb-4">Sesi Terdekat</h5>
+                            <div id="upcomingSessionsList"></div>
+                            <button onclick="lihatSemuaJadwal()"
+                                class="btn btn-outline-primary w-100 rounded-pill mt-3 fw-500">
+                                <i class="fa fa-list-ul me-1"></i> Lihat Semua Jadwal
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div class="modal fade" id="modalDetailJadwal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0">
+                <div class="modal-header bg-primary text-white border-0 py-3">
+                    <h5 class="modal-title fw-bold" id="modalTitle">Detail Jadwal</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4" id="modalBodyContent"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalSemuaJadwal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content border-0 shadow">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title fw-bold text-primary">Semua Agenda Mengajar</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Waktu</th>
+                                    <th>Mata Pelajaran</th>
+                                    <th>Siswa/Sekolah</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="fullScheduleTable"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let date = new Date();
+        let dataPesanan = JSON.parse(localStorage.getItem('sobatPelajar_pesanan')) || [];
+
+        function renderCalendar() {
+            const calendarBody = document.getElementById('calendarBody');
+            const monthYearText = document.getElementById('currentMonthYear');
+
+            // Variabel untuk mengecek hari ini
+            const now = new Date();
+            const todayDate = now.getDate();
+            const todayMonth = now.getMonth();
+            const todayYear = now.getFullYear();
+
+            const currentMonth = date.getMonth();
+            const currentYear = date.getFullYear();
+
+            date.setDate(1);
+            const firstDayIndex = date.getDay() === 0 ? 6 : date.getDay() - 1;
+            const lastDay = new Date(currentYear, currentMonth + 1, 0).getDate();
+            const prevLastDay = new Date(currentYear, currentMonth, 0).getDate();
+
+            const months = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+            monthYearText.innerText = `${months[currentMonth]} ${currentYear}`;
+
+            let days = "";
+
+            for (let x = firstDayIndex; x > 0; x--) {
+                days += `<td class="other-month p-2">${prevLastDay - x + 1}</td>`;
+            }
+
+            for (let i = 1; i <= lastDay; i++) {
+                // Logika deteksi hari ini
+                const isToday = i === todayDate && currentMonth === todayMonth && currentYear === todayYear ? "today" : "";
+
+                // Logika deteksi tanggal yang sudah lewat
+                let isPast = false;
+                if (currentYear < todayYear) {
+                    isPast = true;
+                } else if (currentYear === todayYear && currentMonth < todayMonth) {
+                    isPast = true;
+                } else if (currentYear === todayYear && currentMonth === todayMonth && i < todayDate) {
+                    isPast = true;
+                }
+
+                const pastClass = isPast ? "past-date" : "";
+
+                const monthShort = months[currentMonth].substring(0, 3);
+                const dateStr = i + " " + monthShort;
+                const dailyEvents = dataPesanan.filter(p => p.status === 'Disetujui' && p.jadwal.includes(dateStr));
+
+                let eventHtml = "";
+                dailyEvents.forEach(ev => {
+                    eventHtml += `<div class="event-badge bg-primary text-white">${ev.mapel}</div>`;
+                });
+
+                days += `<td class="${isToday} ${pastClass} p-2" onclick="showDetail('${dateStr}', ${i}, ${isPast})">
+                            <span class="fw-bold">${i}</span>
+                            ${eventHtml}
+                        </td>`;
+
+                if ((i + firstDayIndex) % 7 === 0) {
+                    days += `</tr><tr>`;
+                }
+            }
+            calendarBody.innerHTML = `<tr>${days}</tr>`;
+            renderUpcoming();
+            updateStats();
+        }
+
+        window.showDetail = (dateStr, day, isPast) => {
+            const events = dataPesanan.filter(p => p.status === 'Disetujui' && p.jadwal.includes(dateStr));
+            const modalBody = document.getElementById('modalBodyContent');
+            const modalTitle = document.getElementById('modalTitle');
+
+            modalTitle.innerText = `Jadwal: ${day} ${document.getElementById('currentMonthYear').innerText}`;
+
+            if (events.length === 0) {
+                modalBody.innerHTML = `<div class="text-center py-5"><i class="fa fa-calendar-xmark fa-4x text-light mb-3"></i><p class="text-muted">Tidak ada jadwal.</p></div>`;
+            } else {
+                let html = "";
+                events.forEach(item => {
+                    // Tombol 'Mulai' di-disable jika sudah lewat
+                    const btnHtml = isPast
+                        ? `<button class="btn btn-secondary btn-sm rounded-pill px-4 disabled">Selesai</button>`
+                        : `<button onclick="mulaiSesi('${item.mapel}')" class="btn btn-primary btn-sm rounded-pill px-4 shadow-sm">Mulai</button>`;
+
+                    html += `
+                        <div class="card border-0 bg-light mb-3 p-3 rounded-4 shadow-sm">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="fw-bold mb-1 ${isPast ? 'text-muted' : 'text-primary'}">${item.mapel}</h6>
+                                    <p class="small text-muted mb-0"><i class="fa fa-school me-1"></i> ${item.sekolah}</p>
+                                    <p class="small text-muted mb-0"><i class="fa fa-clock me-1"></i> ${item.jadwal.split(', ')[1] || '15:00'}</p>
+                                </div>
+                                ${btnHtml}
+                            </div>
+                        </div>`;
+                });
+                modalBody.innerHTML = html;
+            }
+            new bootstrap.Modal(document.getElementById('modalDetailJadwal')).show();
+        };
+
+        window.lihatSemuaJadwal = () => {
+            const tableBody = document.getElementById('fullScheduleTable');
+            const allEvents = dataPesanan.filter(p => p.status === 'Disetujui');
+            tableBody.innerHTML = "";
+
+            if (allEvents.length === 0) {
+                tableBody.innerHTML = `<tr><td colspan="4" class="text-center py-5 text-muted">Belum ada jadwal yang disetujui.</td></tr>`;
+            } else {
+                allEvents.forEach(item => {
+                    tableBody.innerHTML += `
+                        <tr>
+                            <td><div class="fw-600">${item.jadwal}</div></td>
+                            <td><span class="badge bg-info-subtle text-info rounded-pill px-3">${item.mapel}</span></td>
+                            <td class="small text-muted">${item.sekolah}</td>
+                            <td><button onclick="mulaiSesi('${item.mapel}')" class="btn btn-primary btn-sm rounded-pill px-3">Mulai</button></td>
+                        </tr>`;
+                });
+            }
+            new bootstrap.Modal(document.getElementById('modalSemuaJadwal')).show();
+        };
+
+        window.mulaiSesi = (mapel) => {
+            alert(`Menghubungkan ke Ruang Kelas Virtual: ${mapel}`);
+        };
+
+        function renderUpcoming() {
+            const list = document.getElementById('upcomingSessionsList');
+            const disetujui = dataPesanan.filter(p => p.status === 'Disetujui');
+            list.innerHTML = "";
+
+            if (disetujui.length === 0) {
+                list.innerHTML = `<div class="text-center py-5 border rounded-4 border-dashed"><p class="small text-muted mb-0">Belum ada agenda</p></div>`;
+                return;
+            }
+
+            disetujui.slice(0, 3).forEach(item => {
+                const parts = item.jadwal.split(' ');
+                list.innerHTML += `
+                    <div class="d-flex gap-3 mb-3 p-3 rounded-4 bg-light border-start border-4 border-primary shadow-sm">
+                        <div class="text-center" style="min-width: 50px;">
+                            <div class="fw-bold fs-5">${parts[0].padStart(2, '0')}</div>
+                            <div class="small text-muted">${parts[1]?.replace(',', '') || 'Mar'}</div>
+                        </div>
+                        <div class="flex-grow-1 border-start ps-3">
+                            <div class="fw-bold small mb-1">${item.mapel}</div>
+                            <div class="small text-muted mb-2"><i class="fa fa-clock me-1"></i> ${item.jadwal.split(', ')[1] || '15:00'}</div>
+                            <button onclick="mulaiSesi('${item.mapel}')" class="btn btn-primary btn-sm rounded-pill w-100 shadow-sm" style="font-size:11px;">Mulai Sesi</button>
+                        </div>
+                    </div>`;
+            });
+        }
+
+        function updateStats() {
+            const total = dataPesanan.filter(p => p.status === 'Disetujui').length;
+            document.getElementById('statsMingguan').innerHTML = `
+                <span class="badge bg-warning text-dark p-2 px-3 rounded-pill shadow-sm">
+                    <i class="fa fa-calendar-check me-1"></i> ${total} Sesi Terjadwal
+                </span>`;
+        }
+
+        window.prevMonth = () => { date.setMonth(date.getMonth() - 1); renderCalendar(); };
+        window.nextMonth = () => { date.setMonth(date.getMonth() + 1); renderCalendar(); };
+        window.goToToday = () => { date = new Date(); renderCalendar(); };
+
+        document.addEventListener('DOMContentLoaded', renderCalendar);
+    </script>
+</body>
+
+</html>
