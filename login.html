@@ -103,8 +103,58 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+  <script>
+    function gantiTab(elBtn, peran) {
+      // Update tampilan tab aktif
+      document.querySelectorAll('.tab-peran .tab').forEach(t => t.classList.remove('aktif'));
+      elBtn.classList.add('aktif');
 
+      // Arahkan ke dashboard sesuai peran jika sudah login
+      // Untuk sekarang hanya update label tombol submit
+      const btnMasuk = document.getElementById('btnMasuk');
+      if (peran === 'tutor') {
+        btnMasuk.textContent = 'Masuk sebagai Tutor';
+      } else {
+        btnMasuk.textContent = 'Masuk';
+      }
+    }
 
+    // Validasi & submit form login
+    document.getElementById('formLogin').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const email    = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      let valid = true;
+
+      document.getElementById('errorEmail').style.display    = 'none';
+      document.getElementById('errorPassword').style.display = 'none';
+      document.getElementById('kotakAlert').style.display    = 'none';
+
+      if (!email || !/\S+@\S+\.\S+/.test(email)) {
+        document.getElementById('errorEmail').style.display = 'block';
+        valid = false;
+      }
+      if (password.length < 8) {
+        document.getElementById('errorPassword').style.display = 'block';
+        valid = false;
+      }
+      if (!valid) return;
+
+      // Cek tab aktif untuk redirect
+      const tabAktif = document.querySelector('.tab-peran .tab.aktif').textContent;
+      if (tabAktif.includes('Tutor')) {
+        window.location.href = 'tutor/ringkasan.html';
+      } else {
+        window.location.href = 'siswa/dashboard-siswa-updated.html';
+      }
+    });
+
+    // Toggle lihat/sembunyikan password
+    function togglePassword() {
+      const input = document.getElementById('password');
+      input.type = input.type === 'password' ? 'text' : 'password';
+    }
+  </script>
 </body>
 
 </html>
