@@ -1,0 +1,556 @@
+/* ================================================
+   style.css — Styling khusus Dashboard Siswa
+   SobatPelajar
+   ================================================ */
+
+/* ── 1. VARIABEL & RESET ── */
+:root {
+  --biru:      #1565C0;
+  --biru-muda: #EFF6FF;
+  --oranye:    #FF6B2B;
+  --oranye-lt: #FFF4EE;
+  --hijau:     #16A34A;
+  --hijau-lt:  #F0FDF4;
+  --merah:     #DC2626;
+  --merah-lt:  #FEF2F2;
+  --kuning:    #F59E0B;
+  --kuning-lt: #FFFBEB;
+  --ungu:      #7C3AED;
+  --ungu-lt:   #F5F3FF;
+  --teks:      #1A1A2E;
+  --abu:       #6B7280;
+  --border:    #E5E9F2;
+  --bg:        #F4F7FC;
+  --white:     #FFFFFF;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: var(--bg);
+  color: var(--teks);
+  min-height: 100vh;
+}
+
+/* ── 2. LAYOUT UTAMA ── */
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ── 3. SIDEBAR ── */
+.sidebar {
+  width: 240px;
+  background: #0D3B6E;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0; left: 0;
+  height: 100vh;
+  z-index: 100;
+  transition: 0.3s;
+}
+
+@media (max-width: 991px) {
+  .sidebar { left: -240px; }
+  .sidebar.buka { left: 0; }
+  .konten-utama { margin-left: 0 !important; }
+}
+
+.sidebar-brand {
+  padding: 24px 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.sidebar-brand .nama {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: white;
+}
+.sidebar-brand .nama span { color: var(--oranye); }
+.sidebar-brand .peran {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.5);
+  margin-top: 2px;
+}
+
+/* Menu navigasi */
+.sidebar-menu {
+  flex: 1;
+  padding: 16px 0;
+  overflow-y: auto;
+}
+.menu-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+  padding: 12px 20px 6px;
+}
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 20px;
+  color: rgba(255,255,255,0.7);
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 500;
+  border-left: 3px solid transparent;
+  transition: 0.2s;
+}
+.menu-item:hover {
+  background: rgba(255,255,255,0.07);
+  color: white;
+}
+.menu-item.aktif {
+  background: rgba(255,107,43,0.15);
+  color: white;
+  border-left-color: var(--oranye);
+}
+.menu-item .ikon { font-size: 1rem; width: 20px; text-align: center; }
+
+/* Sidebar bawah */
+.sidebar-bawah {
+  padding: 16px 20px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+.info-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.avatar-user {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--oranye);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; color: white; font-weight: 700;
+  flex-shrink: 0;
+}
+.nama-user { font-size: 0.82rem; font-weight: 600; color: white; }
+.email-user { font-size: 0.72rem; color: rgba(255,255,255,0.5); }
+.btn-keluar {
+  display: block; width: 100%;
+  margin-top: 10px;
+  padding: 8px;
+  background: rgba(255,255,255,0.08);
+  border: none;
+  border-radius: 8px;
+  color: rgba(255,255,255,0.7);
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.82rem;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  transition: 0.2s;
+}
+.btn-keluar:hover { background: rgba(255,255,255,0.15); color: white; }
+
+/* ── 4. KONTEN UTAMA ── */
+.konten-utama {
+  margin-left: 240px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ── 5. TOPBAR ── */
+.topbar {
+  background: white;
+  border-bottom: 1px solid var(--border);
+  padding: 14px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+.topbar-kiri { display: flex; align-items: center; gap: 12px; }
+.btn-hamburger {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.3rem;
+  cursor: pointer;
+  color: var(--teks);
+  padding: 4px 8px;
+}
+@media (max-width: 991px) { .btn-hamburger { display: block; } }
+
+.judul-halaman { font-size: 1.1rem; font-weight: 700; color: var(--teks); }
+.sub-judul-halaman { font-size: 0.8rem; color: var(--abu); }
+.topbar-kanan { display: flex; align-items: center; gap: 12px; }
+.notif-btn {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; cursor: pointer; position: relative;
+}
+.notif-badge {
+  position: absolute; top: -4px; right: -4px;
+  width: 16px; height: 16px;
+  background: var(--merah); color: white;
+  border-radius: 50%; font-size: 0.6rem;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700;
+}
+
+/* ── 6. AREA HALAMAN ── */
+.area-halaman { padding: 28px; flex: 1; }
+
+/* ── 7. KARTU STATISTIK ── */
+.kartu-stat {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  border: 1px solid var(--border);
+  height: 100%;
+  transition: 0.2s;
+}
+.kartu-stat:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+}
+.angka-stat { font-size: 1.6rem; font-weight: 700; color: var(--teks); line-height: 1; }
+.label-stat { font-size: 0.78rem; color: var(--abu); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.03em; }
+.trend-stat { font-size: 0.75rem; font-weight: 600; margin-top: 6px; }
+.trend-naik { color: var(--hijau); }
+.trend-turun { color: var(--merah); }
+
+/* ── 8. KARTU UMUM ── */
+.kartu {
+  background: white;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+.kartu-header {
+  padding: 18px 22px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.kartu-judul { font-size: 0.95rem; font-weight: 700; color: var(--teks); }
+.kartu-body { padding: 22px; }
+
+/* ── 9. BADGE ── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 0.73rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge-hijau  { background: var(--hijau-lt);  color: var(--hijau); }
+.badge-oranye { background: var(--oranye-lt); color: var(--oranye); }
+.badge-biru   { background: var(--biru-muda); color: var(--biru); }
+.badge-merah  { background: var(--merah-lt);  color: var(--merah); }
+.badge-abu    { background: #F3F4F6; color: var(--abu); }
+.badge-ungu   { background: var(--ungu-lt);   color: var(--ungu); }
+.badge-kuning { background: var(--kuning-lt); color: var(--kuning); }
+
+/* ── 10. JADWAL ITEM ── */
+.jadwal-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+}
+.jadwal-item:last-child { border-bottom: none; }
+.jadwal-waktu { width: 70px; text-align: center; flex-shrink: 0; }
+.jadwal-waktu .jam { font-size: 0.95rem; font-weight: 700; color: var(--teks); }
+.jadwal-waktu .tgl { font-size: 0.72rem; color: var(--abu); }
+.jadwal-garis { width: 3px; height: 44px; border-radius: 2px; flex-shrink: 0; }
+.jadwal-info { flex: 1; }
+.jadwal-mapel { font-size: 0.9rem; font-weight: 700; }
+.jadwal-tutor { font-size: 0.78rem; color: var(--abu); margin-top: 2px; }
+
+/* ── 11. FORM ELEMEN ── */
+.form-grup { margin-bottom: 20px; }
+.form-label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--teks);
+  margin-bottom: 6px;
+}
+.form-input,
+.form-select,
+.form-textarea {
+  width: 100%;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 0.9rem;
+  font-family: 'Poppins', sans-serif;
+  color: var(--teks);
+  background: white;
+  transition: 0.2s;
+  outline: none;
+}
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+  border-color: var(--biru);
+  box-shadow: 0 0 0 3px rgba(21,101,192,0.1);
+}
+.form-textarea { resize: vertical; min-height: 100px; }
+
+/* ── 12. TOMBOL ── */
+.btn-submit {
+  background: var(--biru);
+  color: white;
+  font-weight: 700;
+  font-size: 0.92rem;
+  padding: 11px 28px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  transition: 0.2s;
+}
+.btn-submit:hover { background: #1976D2; transform: translateY(-1px); }
+.btn-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+.btn-batal {
+  background: white;
+  color: var(--abu);
+  font-weight: 600;
+  font-size: 0.92rem;
+  padding: 11px 24px;
+  border-radius: 10px;
+  border: 1.5px solid var(--border);
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  transition: 0.2s;
+}
+.btn-batal:hover { border-color: var(--abu); color: var(--teks); }
+
+/* ── 13. PROFIL SISWA ── */
+.avatar-profil {
+  width: 100px; height: 100px;
+  border-radius: 50%;
+  background: var(--biru);
+  color: white;
+  font-size: 2.5rem;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 16px;
+  position: relative;
+}
+.btn-edit-avatar {
+  position: absolute;
+  bottom: 0; right: 0;
+  width: 30px; height: 30px;
+  background: var(--oranye);
+  color: white;
+  border-radius: 50%;
+  border: 3px solid white;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.btn-edit-avatar:hover { background: #e85a1f; }
+
+.stat-profil-box {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px;
+  text-align: center;
+}
+.stat-profil-nilai {
+  display: block;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--biru);
+}
+.stat-profil-label {
+  font-size: 0.7rem;
+  color: var(--abu);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ── 14. MATERI / DOKUMEN ── */
+.kartu-materi {
+  background: white;
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: 0.2s;
+  margin-bottom: 12px;
+}
+.kartu-materi:hover {
+  box-shadow: 0 4px 14px rgba(0,0,0,0.07);
+  border-color: var(--biru);
+}
+.ikon-file {
+  width: 46px; height: 46px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+.nama-file { font-weight: 700; font-size: 0.9rem; color: var(--teks); }
+.info-file { font-size: 0.78rem; color: var(--abu); margin-top: 2px; }
+.btn-unduh {
+  background: var(--biru-muda);
+  color: var(--biru);
+  border: none;
+  border-radius: 8px;
+  padding: 7px 16px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  transition: 0.2s;
+  flex-shrink: 0;
+}
+.btn-unduh:hover { background: var(--biru); color: white; }
+
+/* ── 15. OVERLAY MOBILE ── */
+.overlay {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 99;
+}
+.overlay.tampil { display: block; }
+
+/* ── 16. PAGINASI ── */
+.paginasi {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 22px;
+  border-top: 1px solid var(--border);
+  font-size: 0.82rem;
+  color: var(--abu);
+}
+.btn-page {
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: white;
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-family: 'Poppins', sans-serif;
+  transition: 0.2s;
+  display: flex; align-items: center; justify-content: center;
+}
+.btn-page:hover { border-color: var(--biru); color: var(--biru); }
+.btn-page.aktif { background: var(--biru); color: white; border-color: var(--biru); }
+
+/* ── 17. PROGRESS BAR ── */
+.progress-mapel { margin-bottom: 14px; }
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.82rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.progress-bar-wrap {
+  height: 8px;
+  background: var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+}
+.progress-bar-fill {
+  height: 100%;
+  border-radius: 20px;
+  transition: width 0.6s ease;
+}
+
+/* ── 18. ALERT ── */
+.alert-sukses {
+  background: var(--hijau-lt);
+  border: 1px solid #BBF7D0;
+  color: var(--hijau);
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  display: none;
+  margin-bottom: 16px;
+}
+.alert-sukses.tampil { display: block; }
+.alert-info {
+  background: var(--biru-muda);
+  border: 1px solid #BFDBFE;
+  color: var(--biru);
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 0.82rem;
+}
+
+/* ── 19. MAIN-CONTENT alias (untuk keserasian dengan tutor) ── */
+.main-content {
+  flex: 1;
+  margin-left: 240px;
+  padding: 0;
+  transition: 0.3s;
+}
+@media (max-width: 991px) {
+  .main-content { margin-left: 0; }
+  .sidebar.active { left: 0; }
+}
+
+/* Sidebar active state (digunakan oleh JS tutor-style) */
+.sidebar.active {
+  left: 0;
+}
+.overlay.active {
+  display: block;
+}
+
+/* Topbar identik dengan tutor */
+.topbar {
+  background: white;
+  border-bottom: 1px solid var(--border);
+  padding: 14px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+.btn-hamburger {
+  background: none;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  width: 36px; height: 36px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  color: var(--teks);
+  display: flex; align-items: center; justify-content: center;
+  transition: 0.2s;
+}
+.btn-hamburger:hover { border-color: var(--biru); color: var(--biru); }
+
+/* Notif button FA icon */
+.notif-btn {
+  position: relative;
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; cursor: pointer;
+}
