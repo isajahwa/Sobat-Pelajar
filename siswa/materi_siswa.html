@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Materi Saya – SobatPelajar</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="../css/siswa/siswa_style.css" />
+  <style>
+    .main-content { flex: 1; margin-left: 240px; transition: 0.3s; }
+    @media (max-width: 991px) { .main-content { margin-left: 0; } }
+  </style>
+</head>
+
+<body>
+  <div class="overlay" id="overlay"></div>
+
+  <div class="layout">
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-brand">
+        <div class="nama">Sobat<span>Pelajar</span></div>
+        <div class="peran">Materi Saya</div>
+      </div>
+      <nav class="sidebar-menu">
+        <div class="menu-label">Menu Utama</div>
+        <a href="dashboard-siswa-updated.html" class="menu-item"><i class="fa fa-th-large"></i>Ringkasan</a>
+        <a href="cari_tutor.html" class="menu-item"><i class="fa fa-search"></i>Cari Tutor</a>
+        <a href="pesanan_siswa.html" class="menu-item"><i class="fa-solid fa-bag-shopping"></i>Pesanan Saya</a>
+        <a href="jadwal_siswa.html" class="menu-item"><i class="fa fa-calendar"></i>Jadwal Saya</a>
+        <a href="materi_siswa.html" class="menu-item aktif"><i class="fa fa-book"></i>Materi Saya</a>
+
+        <div class="menu-label" style="margin-top:8px;">Akun</div>
+        <a href="profil_siswa.html" class="menu-item"><i class="fa fa-user-circle"></i>Profil</a>
+      </nav>
+      <div class="sidebar-bawah">
+        <div class="info-user">
+          <div id="sideAvatar" class="avatar-user">R</div>
+          <div>
+            <div id="sideNama" class="nama-user">Rizky Aditya</div>
+            <div id="sideEmail" class="email-user">rizky@email.com</div>
+          </div>
+        </div>
+        <a href="../login.html" class="btn-keluar"><i class="fa fa-sign-out-alt me-1"></i>Keluar</a>
+      </div>
+    </aside>
+
+    <!-- KONTEN UTAMA -->
+    <main class="main-content">
+      <div class="topbar">
+        <div class="d-flex align-items-center">
+          <button class="btn-hamburger me-3 d-lg-none" id="btnMenu"><i class="fa fa-bars"></i></button>
+          <div>
+            <div class="judul-halaman">Materi Saya</div>
+            <div class="sub-judul-halaman">Modul dan tugas yang dikirim oleh tutor</div>
+          </div>
+        </div>
+        <div class="topbar-kanan d-flex align-items-center gap-3">
+          <div class="notif-btn"><i class="fa fa-bell"></i><span class="notif-badge">3</span></div>
+          <div id="topAvatar" class="avatar-user" style="width:36px;height:36px;font-size:.85rem;background:var(--biru);">R</div>
+        </div>
+      </div>
+
+      <div class="area-halaman">
+
+        <!-- STATISTIK -->
+        <div class="row g-3 mb-4">
+          <div class="col-6 col-lg-3">
+            <div class="kartu-stat">
+              <div class="label-stat">Total Materi</div>
+              <div class="angka-stat">8</div>
+              <div class="trend-stat trend-naik">↑ 2 materi baru</div>
+            </div>
+          </div>
+          <div class="col-6 col-lg-3">
+            <div class="kartu-stat">
+              <div class="label-stat">Belum Dibaca</div>
+              <div class="angka-stat" style="color:var(--oranye);">3</div>
+              <div class="trend-stat" style="color:var(--oranye);">Segera baca!</div>
+            </div>
+          </div>
+          <div class="col-6 col-lg-3">
+            <div class="kartu-stat">
+              <div class="label-stat">Tugas Aktif</div>
+              <div class="angka-stat" style="color:var(--merah);">2</div>
+              <div class="trend-stat trend-turun">Deadline minggu ini</div>
+            </div>
+          </div>
+          <div class="col-6 col-lg-3">
+            <div class="kartu-stat">
+              <div class="label-stat">Sudah Dibaca</div>
+              <div class="angka-stat" style="color:var(--hijau);">5</div>
+              <div class="trend-stat trend-naik">↑ Terus semangat!</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row g-4">
+
+          <!-- DAFTAR MATERI -->
+          <div class="col-lg-8">
+            <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
+              <div class="d-flex gap-2 flex-wrap" id="filterMapelMateri">
+                <button class="btn btn-primary btn-sm rounded-pill px-3" onclick="filterMateri('semua', this)">Semua</button>
+                <button class="btn btn-outline-secondary btn-sm rounded-pill px-3" onclick="filterMateri('matematika', this)">Matematika</button>
+                <button class="btn btn-outline-secondary btn-sm rounded-pill px-3" onclick="filterMateri('fisika', this)">Fisika</button>
+                <button class="btn btn-outline-secondary btn-sm rounded-pill px-3" onclick="filterMateri('bahasa inggris', this)">Bhs. Inggris</button>
+                <button class="btn btn-outline-secondary btn-sm rounded-pill px-3" onclick="filterMateri('kimia', this)">Kimia</button>
+              </div>
+            </div>
+            <div id="listMateri"></div>
+          </div>
+
+          <!-- PANEL KANAN -->
+          <div class="col-lg-4">
+
+            <!-- Progress belajar -->
+            <div class="kartu mb-4">
+              <div class="kartu-header">
+                <span class="kartu-judul"><i class="fa fa-chart-line me-2 text-primary"></i>Progress Belajar</span>
+              </div>
+              <div class="kartu-body">
+                <div class="progress-mapel">
+                  <div class="progress-label"><span>Matematika</span><span style="color:var(--biru);">78%</span></div>
+                  <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:78%;background:var(--biru);"></div></div>
+                </div>
+                <div class="progress-mapel">
+                  <div class="progress-label"><span>Bahasa Inggris</span><span style="color:var(--oranye);">65%</span></div>
+                  <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:65%;background:var(--oranye);"></div></div>
+                </div>
+                <div class="progress-mapel">
+                  <div class="progress-label"><span>Fisika</span><span style="color:var(--hijau);">90%</span></div>
+                  <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:90%;background:var(--hijau);"></div></div>
+                </div>
+                <div class="progress-mapel" style="margin-bottom:0;">
+                  <div class="progress-label"><span>Kimia</span><span style="color:var(--kuning);">52%</span></div>
+                  <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:52%;background:var(--kuning);"></div></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tugas deadline -->
+            <div class="kartu">
+              <div class="kartu-header">
+                <span class="kartu-judul"><i class="fa fa-exclamation-triangle me-2 text-warning"></i>Tugas Mendatang</span>
+              </div>
+              <div class="kartu-body" style="padding:0;">
+                <div style="padding:16px 20px;border-bottom:1px solid var(--border);">
+                  <div style="font-weight:700;font-size:0.88rem;">Soal Latihan Trigonometri</div>
+                  <div style="font-size:0.75rem;color:var(--abu);margin-top:2px;">Budi Santoso, M.Pd</div>
+                  <div class="d-flex align-items-center justify-content-between mt-2">
+                    <span class="badge badge-merah"><i class="fa fa-clock me-1"></i>Deadline: 10 Apr</span>
+                    <button class="btn-unduh" style="padding:4px 12px;font-size:0.75rem;"><i class="fa fa-download me-1"></i>Unduh</button>
+                  </div>
+                </div>
+                <div style="padding:16px 20px;">
+                  <div style="font-weight:700;font-size:0.88rem;">Essay Grammar Practice</div>
+                  <div style="font-size:0.75rem;color:var(--abu);margin-top:2px;">Dewi Rahayu, S.Pd</div>
+                  <div class="d-flex align-items-center justify-content-between mt-2">
+                    <span class="badge badge-oranye"><i class="fa fa-clock me-1"></i>Deadline: 15 Apr</span>
+                    <button class="btn-unduh" style="padding:4px 12px;font-size:0.75rem;"><i class="fa fa-download me-1"></i>Unduh</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const ikonTipe = { 'PDF': 'fa-file-pdf', 'MP4': 'fa-file-video', 'DOCX': 'fa-file-word' };
+
+    const dataMateri = [
+      { nama: 'Modul Trigonometri Dasar',   tutor: 'Budi Santoso, M.Pd', mapel: 'matematika',    tipe: 'PDF',  ukuran: '2.3 MB',  tanggal: '1 Apr 2026',  dibaca: true,  ikonWarna: '#DC2626', bg: '#FEF2F2' },
+      { nama: 'Soal Latihan Trigonometri',  tutor: 'Budi Santoso, M.Pd', mapel: 'matematika',    tipe: 'PDF',  ukuran: '1.1 MB',  tanggal: '3 Apr 2026',  dibaca: false, ikonWarna: '#DC2626', bg: '#FEF2F2' },
+      { nama: 'Ringkasan Hukum Newton',     tutor: 'Ahmad Fauzi, M.Si',  mapel: 'fisika',        tipe: 'PDF',  ukuran: '3.5 MB',  tanggal: '28 Mar 2026', dibaca: true,  ikonWarna: '#16A34A', bg: '#F0FDF4' },
+      { nama: 'Video: Gelombang Cahaya',    tutor: 'Ahmad Fauzi, M.Si',  mapel: 'fisika',        tipe: 'MP4',  ukuran: '45 MB',   tanggal: '25 Mar 2026', dibaca: false, ikonWarna: '#16A34A', bg: '#F0FDF4' },
+      { nama: 'Grammar: Tenses Lengkap',    tutor: 'Dewi Rahayu, S.Pd', mapel: 'bahasa inggris', tipe: 'DOCX', ukuran: '890 KB',  tanggal: '22 Mar 2026', dibaca: true,  ikonWarna: '#1565C0', bg: '#EFF6FF' },
+      { nama: 'Essay Grammar Practice',     tutor: 'Dewi Rahayu, S.Pd', mapel: 'bahasa inggris', tipe: 'PDF',  ukuran: '1.2 MB',  tanggal: '20 Mar 2026', dibaca: false, ikonWarna: '#1565C0', bg: '#EFF6FF' },
+      { nama: 'Modul Ikatan Kimia',         tutor: 'Sari Indah, S.Pd',  mapel: 'kimia',         tipe: 'PDF',  ukuran: '4.1 MB',  tanggal: '15 Mar 2026', dibaca: true,  ikonWarna: '#F59E0B', bg: '#FFFBEB' },
+      { nama: 'Latihan Soal Kimia Org.',    tutor: 'Sari Indah, S.Pd',  mapel: 'kimia',         tipe: 'PDF',  ukuran: '2.8 MB',  tanggal: '10 Mar 2026', dibaca: true,  ikonWarna: '#F59E0B', bg: '#FFFBEB' },
+    ];
+
+    function renderMateri(data) {
+      const list = document.getElementById('listMateri');
+      if (data.length === 0) {
+        list.innerHTML = `<div class="text-center py-5">
+          <i class="fa fa-inbox fa-3x text-muted mb-3"></i>
+          <div style="font-weight:700;margin-top:12px;">Belum ada materi</div>
+          <div style="color:var(--abu);font-size:.88rem;">Materi dari tutor akan muncul di sini</div>
+        </div>`;
+        return;
+      }
+      list.innerHTML = data.map(m => `
+        <div class="kartu-materi">
+          <div class="ikon-file" style="background:${m.bg};">
+            <i class="fa ${ikonTipe[m.tipe] || 'fa-file'}" style="color:${m.ikonWarna};font-size:1.4rem;"></i>
+          </div>
+          <div class="flex-grow-1">
+            <div class="d-flex align-items-start justify-content-between gap-2">
+              <div class="nama-file">${m.nama}</div>
+              ${!m.dibaca ? `<span class="badge badge-oranye" style="flex-shrink:0;">Baru</span>` : ''}
+            </div>
+            <div class="info-file"><i class="fa fa-user me-1"></i>${m.tutor} · ${m.tipe} · ${m.ukuran}</div>
+            <div class="info-file"><i class="fa fa-calendar me-1"></i>Dikirim: ${m.tanggal}</div>
+          </div>
+          <button class="btn-unduh"><i class="fa fa-download me-1"></i>Unduh</button>
+        </div>`).join('');
+    }
+
+    function filterMateri(mapel, el) {
+      document.querySelectorAll('#filterMapelMateri button').forEach(b => {
+        b.classList.remove('btn-primary');
+        b.classList.add('btn-outline-secondary');
+      });
+      el.classList.remove('btn-outline-secondary');
+      el.classList.add('btn-primary');
+      renderMateri(mapel === 'semua' ? dataMateri : dataMateri.filter(m => m.mapel === mapel));
+    }
+
+    document.getElementById('btnMenu').onclick = () => {
+      document.getElementById('sidebar').classList.add('active');
+      document.getElementById('overlay').classList.add('active');
+    };
+    document.getElementById('overlay').onclick = () => {
+      document.getElementById('sidebar').classList.remove('active');
+      document.getElementById('overlay').classList.remove('active');
+    };
+
+    renderMateri(dataMateri);
+  </script>
+</body>
+</html>
