@@ -10,7 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="css/register.css">
+    <link rel="stylesheet" href="register.css">
 </head>
 
 <body>
@@ -49,8 +49,8 @@
                 </div>
 
                 <div class="tab-peran">
-                    <button class="tab aktif">Siswa / Orang Tua</button>
-                    <button class="tab">Tutor</button>
+                    <button class="tab aktif" onclick="gantiTab(this, 'siswa')">Siswa / Orang Tua</button>
+                    <button class="tab" onclick="gantiTab(this, 'tutor')">Tutor</button>
                 </div>
 
                 <form action="login_register.php" id="formRegister" method="post">
@@ -110,6 +110,19 @@
 
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script>
+      function gantiTab(elBtn, peran) {
+        document.querySelectorAll('.tab-peran .tab').forEach(t => t.classList.remove('aktif'));
+        elBtn.classList.add('aktif');
+
+        const btnDaftar = document.querySelector('button[type="submit"]');
+        if (peran === 'tutor') {
+          btnDaftar.textContent = 'Daftar sebagai Tutor';
+        } else {
+          btnDaftar.textContent = 'Daftar Sekarang';
+        }
+      }
+    </script>
 </body>
 
 </html>
