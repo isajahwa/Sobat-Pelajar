@@ -47,7 +47,7 @@
                         <div id="sideEmail" class="email-user">budi@email.com</div>
                     </div>
                 </div>
-                <a href="login.html" class="btn-keluar"><i class="fa fa-sign-out-alt me-1"></i>Keluar</a>
+                <a href="../index.html" class="btn-keluar"><i class="fa fa-sign-out-alt me-1"></i>Keluar</a>
             </div>
         </aside>
 
@@ -184,9 +184,26 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            loadDataProfil();
+            // 1. Cek sesi login
+            const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
 
-            // Handle Ganti Password
+            if (!loggedInUser) {
+                alert('Anda belum login. Silakan login terlebih dahulu!');
+                window.location.href = '../login.html';
+                return;
+            }
+
+            // Pastikan yang login benar-benar tutor (Opsional, tapi baik untuk keamanan)
+            if (loggedInUser.peran !== 'tutor') {
+                alert('Akses ditolak. Anda login sebagai Siswa.');
+                window.location.href = '../login.html';
+                return;
+            }
+
+            // 2. Load Data ke Form dan UI
+            loadDataProfil(loggedInUser);
+
+            // Handle Ganti Password (Simulasi)
             const formPass = document.getElementById('formGantiPassword');
             formPass.addEventListener('submit', function (e) {
                 e.preventDefault();
@@ -194,9 +211,10 @@
                 const konfirmasi = document.getElementById('passKonfirmasi').value;
 
                 if (baru !== konfirmasi) return alert("Konfirmasi password tidak sesuai!");
-                if (baru.length < 6) return alert("Password minimal 6 karakter!");
+                if (baru.length < 8) return alert("Password minimal 8 karakter!"); // Menyesuaikan standar registrasi
 
-                alert("Berhasil! Kata sandi Anda telah diperbarui.");
+                // Note: Untuk mengubah password beneran, Anda harus meng-update data di `dataUsers` juga.
+                alert("Fitur ganti sandi dalam pengembangan. Silakan hubungi admin.");
                 formPass.reset();
                 bootstrap.Modal.getInstance(document.getElementById('modalPassword')).hide();
             });
@@ -228,45 +246,70 @@
             }
         }
 
-        function loadDataProfil() {
-            const profil = JSON.parse(localStorage.getItem('user_profil')) || {
-                nama: "Budi Santoso", gelar: "S.Pd.", email: "budi@email.com",
-                wa: "081234567890", bio: "Lulusan S1 Pendidikan Matematika dengan pengalaman mengajar 5 tahun...",
-                pendidikan: "Universitas Negeri Malang", keahlian: "Kalkulus, Trigonometri, Mekanika"
-            };
+        // Fungsi Memuat Data dari LocalStorage ke Input Form
+        function loadDataProfil(userData) {
+            // Gunakan data dari registrasi, atau gunakan default kosong jika belum diisi
+            document.getElementById('inputNama').value = userData.nama || '';
+            document.getElementById('inputEmail').value = userData.email || '';
+            document.getElementById('inputWA').value = userData.nohp || ''; // Sesuai dengan form registrasi
 
-            document.getElementById('inputNama').value = profil.nama;
-            document.getElementById('inputGelar').value = profil.gelar;
-            document.getElementById('inputEmail').value = profil.email;
-            document.getElementById('inputWA').value = profil.wa;
-            document.getElementById('inputBio').value = profil.bio;
-            document.getElementById('inputPendidikan').value = profil.pendidikan;
-            document.getElementById('inputKeahlian').value = profil.keahlian;
+            // Data tambahan khusus mentor (mungkin belum ada saat registrasi awal)
+            document.getElementById('inputGelar').value = userData.gelar || '';
+            document.getElementById('inputBio').value = userData.bio || '';
+            document.getElementById('inputPendidikan').value = userData.pendidikan || '';
+            document.getElementById('inputKeahlian').value = userData.keahlian || '';
 
-            updateUIVisual(profil);
+            updateUIVisual(userData);
         }
 
+        // Fungsi Memperbarui Tampilan Teks (Sidebar & Preview)
         function updateUIVisual(data) {
-            const initial = data.nama.charAt(0).toUpperCase();
-            document.getElementById('previewNama').innerText = `${data.nama}, ${data.gelar}`;
-            document.getElementById('previewTagline').innerText = `Mentor ${data.keahlian}`;
-            document.getElementById('mainAvatar').innerText = initial;
-            document.getElementById('sideNama').innerText = data.nama;
+            const nama = data.nama || 'Mentor';
+            const initial = nama.charAt(0).toUpperCase();
+            const gelar = data.gelar ? `, ${data.gelar}` : '';
+            const keahlian = data.keahlian ? data.keahlian : 'Umum';
+
+            // Kartu Profil Kiri
+            document.getElementById('previewNama').innerText = `${nama}${gelar}`;
+            document.getElementById('previewTagline').innerText = `Mentor ${keahlian}`;
+
+            // Perbaikan untuk textNode agar icon kamera tidak hilang
+            document.getElementById('mainAvatar').childNodes[0].nodeValue = initial + " ";
+
+            // Sidebar
+            document.getElementById('sideNama').innerText = nama;
+            document.getElementById('sideEmail').innerText = data.email || '';
             document.getElementById('sideAvatar').innerText = initial;
         }
 
+        // Fungsi Menyimpan Perubahan
         function simpanProfil() {
-            const profilBaru = {
-                nama: document.getElementById('inputNama').value,
-                gelar: document.getElementById('inputGelar').value,
-                email: document.getElementById('inputEmail').value,
-                wa: document.getElementById('inputWA').value,
-                bio: document.getElementById('inputBio').value,
-                pendidikan: document.getElementById('inputPendidikan').value,
-                keahlian: document.getElementById('inputKeahlian').value
-            };
-            localStorage.setItem('user_profil', JSON.stringify(profilBaru));
-            updateUIVisual(profilBaru);
+            let loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+            if (!loggedInUser) return;
+
+            // Update objek dengan nilai baru dari form
+            loggedInUser.nama = document.getElementById('inputNama').value;
+            loggedInUser.gelar = document.getElementById('inputGelar').value;
+            // Email biasanya tidak diubah
+            loggedInUser.nohp = document.getElementById('inputWA').value;
+            loggedInUser.bio = document.getElementById('inputBio').value;
+            loggedInUser.pendidikan = document.getElementById('inputPendidikan').value;
+            loggedInUser.keahlian = document.getElementById('inputKeahlian').value;
+
+            // 1. Simpan ke sesi aktif
+            localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser));
+
+            // 2. Simpan juga ke database utama (dataUsers)
+            let users = JSON.parse(localStorage.getItem('dataUsers')) || [];
+            const userIndex = users.findIndex(u => u.email === loggedInUser.email && u.peran === 'tutor');
+
+            if (userIndex !== -1) {
+                users[userIndex] = { ...users[userIndex], ...loggedInUser };
+                localStorage.setItem('dataUsers', JSON.stringify(users));
+            }
+
+            // Update UI
+            updateUIVisual(loggedInUser);
             alert("Profil Anda berhasil disimpan!");
         }
 
@@ -277,7 +320,7 @@
             alert("Link profil disalin ke clipboard!");
         }
     </script>
-    
+
 </body>
 
 </html>

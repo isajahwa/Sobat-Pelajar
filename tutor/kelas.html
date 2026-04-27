@@ -44,7 +44,7 @@
                         <div class="email-user">budi@email.com</div>
                     </div>
                 </div>
-                <a href="login.html" class="btn-keluar"><i class="fa fa-sign-out-alt me-1"></i>Keluar</a>
+                <a href="../index.html" class="btn-keluar"><i class="fa fa-sign-out-alt me-1"></i>Keluar</a>
             </div>
         </aside>
 
@@ -128,14 +128,42 @@
         </main>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            // --- 1. CEK SESI LOGIN & UPDATE PROFIL ---
+            const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+
+            if (!loggedInUser) {
+                alert('Anda belum login. Silakan login terlebih dahulu!');
+                window.location.href = '../login.html';
+                return;
+            }
+
+            // Validasi peran Tutor
+            if (loggedInUser.peran !== 'tutor') {
+                alert('Akses ditolak. Anda login sebagai Siswa.');
+                window.location.href = '../login.html';
+                return;
+            }
+
+            // Update profil di sidebar (Menggunakan querySelector karena tidak ada ID)
+            const nama = loggedInUser.nama || 'Mentor';
+            const email = loggedInUser.email || '';
+            const inisial = nama.charAt(0).toUpperCase();
+
+            document.querySelector('.info-user .nama-user').textContent = nama;
+            document.querySelector('.info-user .email-user').textContent = email;
+            document.querySelector('.info-user .avatar-user').textContent = inisial;
+
+
+            // --- 2. DEKLARASI VARIABEL & LOGIKA KELAS ---
             const form = document.getElementById('formKelas');
             const listContainer = document.getElementById('listKelasContainer');
             const countBadge = document.getElementById('countKelas');
             const searchInput = document.getElementById('searchKelas');
 
-            // 1. Fungsi Utama Render Daftar Kelas
+            // Fungsi Utama Render Daftar Kelas
             function renderKelas(filterKeyword = '') {
                 const dataKelas = JSON.parse(localStorage.getItem('katalog_kelas')) || [];
                 countBadge.innerHTML = `<i class="fa fa-star me-1"></i> ${dataKelas.length} Kelas Aktif`;
@@ -171,7 +199,7 @@
                 `).join('');
             }
 
-            // 2. Event Listener untuk Form (Tambah/Update)
+            // Event Listener untuk Form (Tambah/Update)
             form.addEventListener('submit', function (e) {
                 e.preventDefault();
                 const dataKelas = JSON.parse(localStorage.getItem('katalog_kelas')) || [];
@@ -199,12 +227,12 @@
                 renderKelas();
             });
 
-            // 3. Fitur Live Search
+            // Fitur Live Search
             searchInput.addEventListener('input', function () {
                 renderKelas(this.value);
             });
 
-            // 4. Fungsi Global (Edit, Hapus, Reset)
+            // Fungsi Global (Edit, Hapus, Reset) di-attach ke Window
             window.editKelas = function (id) {
                 const dataKelas = JSON.parse(localStorage.getItem('katalog_kelas')) || [];
                 const k = dataKelas.find(item => item.id === id);
@@ -249,7 +277,7 @@
                 document.getElementById('overlay').classList.remove('active');
             }
 
-            // Jalankan Render Pertama Kali
+            // Jalankan Render Pertama Kali setelah semua validasi selesai
             renderKelas();
         });
     </script>

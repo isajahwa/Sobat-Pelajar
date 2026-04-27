@@ -41,7 +41,7 @@
             <div id="sideEmail" class="email-user">rizky@email.com</div>
           </div>
         </div>
-        <a href="../login.html" class="btn-keluar"><i class="fa fa-sign-out-alt me-1"></i>Keluar</a>
+        <a href="../index.html" class="btn-keluar"><i class="fa fa-sign-out-alt me-1"></i>Keluar</a>
       </div>
     </aside>
 
@@ -56,7 +56,8 @@
         </div>
         <div class="topbar-kanan d-flex align-items-center gap-3">
           <div class="notif-btn"><i class="fa fa-bell"></i><span class="notif-badge">3</span></div>
-          <div id="topAvatar" class="avatar-user" style="width:36px;height:36px;font-size:.85rem;background:var(--biru);">R</div>
+          <div id="topAvatar" class="avatar-user"
+            style="width:36px;height:36px;font-size:.85rem;background:var(--biru);">R</div>
         </div>
       </div>
 
@@ -131,7 +132,8 @@
           <div class="col-lg-7">
             <div class="kartu h-100">
               <div class="kartu-header">
-                <span class="kartu-judul"><i class="fa fa-chart-line me-2 text-primary"></i>Progress Mata Pelajaran</span>
+                <span class="kartu-judul"><i class="fa fa-chart-line me-2 text-primary"></i>Progress Mata
+                  Pelajaran</span>
               </div>
               <div class="kartu-body">
                 <div class="row g-3">
@@ -183,6 +185,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function () {
+      // 1. Update Tanggal di Topbar
       const updateTime = () => {
         const now = new Date();
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
@@ -190,25 +193,38 @@
       };
       updateTime();
 
-      const profil = JSON.parse(localStorage.getItem('user_profil')) || {
-        nama: "Rizky Aditya",
-        email: "rizky@email.com"
-      };
-      document.getElementById('sideNama').innerText = profil.nama;
-      document.getElementById('sideEmail').innerText = profil.email;
-      const initial = profil.nama.charAt(0).toUpperCase();
-      document.getElementById('sideAvatar').innerText = initial;
-      document.getElementById('topAvatar').innerText = initial;
+      // 2. Cek sesi login di localStorage
+      const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
 
+      if (!loggedInUser) {
+        alert('Anda belum login. Silakan login terlebih dahulu!');
+        // Sesuaikan path ini dengan lokasi file login.html Anda
+        window.location.href = '../login.html';
+        return;
+      }
+
+      // 3. Update data profil di sidebar dan topbar
+      const nama = loggedInUser.nama || 'Siswa';
+      const email = loggedInUser.email || '';
+      const inisial = nama.charAt(0).toUpperCase();
+
+      document.getElementById('sideNama').textContent = nama;
+      document.getElementById('sideEmail').textContent = email;
+      document.getElementById('sideAvatar').textContent = inisial;
+      document.getElementById('topAvatar').textContent = inisial;
+
+      // 4. Logika Menu Hamburger untuk Tampilan Mobile
       const btnMenu = document.getElementById('btnMenu');
       const sidebar = document.getElementById('sidebar');
       const overlay = document.getElementById('overlay');
+
       if (btnMenu) {
         btnMenu.onclick = () => {
           sidebar.classList.add('active');
           overlay.classList.add('active');
         };
       }
+
       overlay.onclick = () => {
         sidebar.classList.remove('active');
         overlay.classList.remove('active');

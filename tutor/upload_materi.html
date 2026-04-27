@@ -44,7 +44,7 @@
                         <div class="email-user">budi@email.com</div>
                     </div>
                 </div>
-                <a href="login.html" class="btn-keluar"><i class="fa fa-sign-out-alt me-1"></i>Keluar</a>
+                <a href="../index.html" class="btn-keluar"><i class="fa fa-sign-out-alt me-1"></i>Keluar</a>
             </div>
         </aside>
 
@@ -135,6 +135,34 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            // --- 1. CEK SESI LOGIN & UPDATE PROFIL ---
+            const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+
+            if (!loggedInUser) {
+                alert('Anda belum login. Silakan login terlebih dahulu!');
+                window.location.href = '../login.html';
+                return;
+            }
+
+            // Validasi peran Tutor
+            if (loggedInUser.peran !== 'tutor') {
+                alert('Akses ditolak. Anda login sebagai Siswa.');
+                window.location.href = '../login.html';
+                return;
+            }
+
+            // Update profil di sidebar
+            const nama = loggedInUser.nama || 'Mentor';
+            const email = loggedInUser.email || '';
+            const inisial = nama.charAt(0).toUpperCase();
+
+            // Menggunakan querySelector karena elemen di HTML menggunakan class
+            document.querySelector('.info-user .nama-user').textContent = nama;
+            document.querySelector('.info-user .email-user').textContent = email;
+            document.querySelector('.info-user .avatar-user').textContent = inisial;
+
+
+            // --- 2. DEKLARASI VARIABEL LOGIKA UPLOAD ---
             const form = document.getElementById('formUpload');
             const selectSiswa = document.getElementById('selectSiswa');
             const fileInput = document.getElementById('fileInput');
@@ -144,7 +172,7 @@
             const progBar = document.getElementById('progBar');
             const btnKirim = document.getElementById('btnKirim');
 
-            // 1. Dropdown Siswa Otomatis dari Kelola Pesanan
+            // Dropdown Siswa Otomatis dari Kelola Pesanan (daftar_siswa)
             function loadSiswaDropdown() {
                 const listSiswa = JSON.parse(localStorage.getItem('daftar_siswa')) || [];
                 listSiswa.forEach(siswa => {
@@ -155,7 +183,7 @@
                 });
             }
 
-            // 2. Hitung Kuota Dinamis
+            // Hitung Kuota Dinamis
             function updateQuotaUI() {
                 const riwayat = JSON.parse(localStorage.getItem('riwayat_materi')) || [];
                 const maxQuotaMB = 2048; // Total 2GB
@@ -189,7 +217,7 @@
                 }
             }
 
-            // 3. Tampilkan Nama File saat dipilih
+            // Tampilkan Nama File saat dipilih
             fileInput.addEventListener('change', function () {
                 if (this.files.length > 0) {
                     fileNameDisplay.textContent = this.files[0].name;
@@ -197,7 +225,7 @@
                 }
             });
 
-            // 4. Render Tabel Riwayat
+            // Render Tabel Riwayat
             function loadRiwayat() {
                 const riwayat = JSON.parse(localStorage.getItem('riwayat_materi')) || [];
                 riwayatTableBody.innerHTML = riwayat.map((materi, index) => `
@@ -220,7 +248,7 @@
                 `).join('');
 
                 if (riwayat.length === 0) {
-                    riwayatTableBody.innerHTML = '<tr><td colspan="4" class="text-center p-4 text-muted">Belum ada riwayat unggahan</td></tr>';
+                    riwayatTableBody.innerHTML = '<tr><td colspan="4" class="text-center p-4 text-muted">` riwayat unggahan</td></tr>';
                 }
                 updateQuotaUI();
             }
@@ -237,7 +265,7 @@
                 return 'text-warning';
             }
 
-            // 5. Proses Simpan (Simulasi Upload)
+            // Proses Simpan (Simulasi Upload)
             form.addEventListener('submit', function (e) {
                 e.preventDefault();
                 const file = fileInput.files[0];
@@ -277,10 +305,12 @@
                 btnKirim.disabled = false;
                 form.reset();
                 fileNameDisplay.textContent = "Klik untuk pilih file";
+                fileNameDisplay.classList.remove('text-primary');
 
                 loadRiwayat();
             }
 
+            // Fungsi Global di-attach ke window agar terbaca oleh onclick HTML
             window.hapusMateri = function (index) {
                 let riwayat = JSON.parse(localStorage.getItem('riwayat_materi')) || [];
                 riwayat.splice(index, 1);
@@ -295,16 +325,25 @@
                 }
             }
 
-            // Sidebar Toggle
-            document.getElementById('btnMenu').onclick = () => {
-                document.getElementById('sidebar').classList.add('active');
-                document.getElementById('overlay').classList.add('active');
+            // --- 3. SIDEBAR TOGGLE ---
+            const btnMenu = document.getElementById('btnMenu');
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+
+            if (btnMenu) {
+                btnMenu.onclick = () => {
+                    sidebar.classList.add('active');
+                    overlay.classList.add('active');
+                }
             }
-            document.getElementById('overlay').onclick = () => {
-                document.getElementById('sidebar').classList.remove('active');
-                document.getElementById('overlay').classList.remove('active');
+            if (overlay) {
+                overlay.onclick = () => {
+                    sidebar.classList.remove('active');
+                    overlay.classList.remove('active');
+                }
             }
 
+            // Inisialisasi awal setelah user valid
             loadSiswaDropdown();
             loadRiwayat();
         });

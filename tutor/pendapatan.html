@@ -44,7 +44,7 @@
                         <div id="sideEmail" class="email-user">budi@email.com</div>
                     </div>
                 </div>
-                <a href="login.html" class="btn-keluar"><i class="fa fa-sign-out-alt me-1"></i>Keluar</a>
+                <a href="../index.html" class="btn-keluar"><i class="fa fa-sign-out-alt me-1"></i>Keluar</a>
             </div>
         </aside>
 
@@ -177,9 +177,32 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            loadUserSidebar();
+            // --- 1. CEK SESI LOGIN & UPDATE PROFIL ---
+            const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
 
-            // Hamburger Menu Logic
+            if (!loggedInUser) {
+                alert('Anda belum login. Silakan login terlebih dahulu!');
+                window.location.href = '../login.html';
+                return;
+            }
+
+            // Validasi peran Tutor
+            if (loggedInUser.peran !== 'tutor') {
+                alert('Akses ditolak. Anda login sebagai Siswa.');
+                window.location.href = '../login.html';
+                return;
+            }
+
+            // Update profil di sidebar
+            const nama = loggedInUser.nama || 'Mentor';
+            const email = loggedInUser.email || '';
+            const inisial = nama.charAt(0).toUpperCase();
+
+            document.getElementById('sideNama').textContent = nama;
+            document.getElementById('sideEmail').textContent = email;
+            document.getElementById('sideAvatar').textContent = inisial;
+
+            // --- 2. MENU HAMBURGER MOBILE ---
             const btnMenu = document.getElementById('btnMenu');
             const sidebar = document.getElementById('sidebar');
             const overlay = document.getElementById('overlay');
@@ -195,13 +218,14 @@
                 overlay.classList.remove('active');
             }
 
-            // Form Penarikan Logic
+            // --- 3. FORM PENARIKAN LOGIC ---
             const formTarik = document.getElementById('formTarikDana');
             formTarik.onsubmit = function (e) {
                 e.preventDefault();
                 const nominal = document.getElementById('nominalTarik').value;
                 const bank = document.getElementById('bankTujuan').value;
 
+                // Simulasi pengecekan saldo
                 if (nominal > 2450000) {
                     alert("Maaf, saldo Anda tidak mencukupi!");
                 } else {
@@ -210,15 +234,6 @@
                 }
             }
         });
-
-        function loadUserSidebar() {
-            const profil = JSON.parse(localStorage.getItem('user_profil'));
-            if (profil) {
-                document.getElementById('sideNama').innerText = profil.nama;
-                document.getElementById('sideEmail').innerText = profil.email;
-                document.getElementById('sideAvatar').innerText = profil.nama.charAt(0).toUpperCase();
-            }
-        }
     </script>
 </body>
 

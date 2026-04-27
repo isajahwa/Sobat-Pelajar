@@ -23,7 +23,7 @@
 
             <nav class="sidebar-menu">
                 <div class="menu-label">Menu Utama</div>
-                <a href="ringka.html" class="menu-item"><i class="fa fa-th-large"></i>Ringkasan</a>
+                <a href="ringkasan.html" class="menu-item"><i class="fa fa-th-large"></i>Ringkasan</a>
                 <a href="kelola_pesanan.html" class="menu-item"><i class="fa-solid fa-bag-shopping"></i>Kelola
                     Pesanan</a>
                 <a href="jadwal_mengajar.html" class="menu-item"><i class="fa fa-calendar"></i>Jadwal Mengajar</a>
@@ -44,7 +44,7 @@
                         <div class="email-user">budi@email.com</div>
                     </div>
                 </div>
-                <a href="login.html" class="btn-keluar"><i class="fa fa-sign-out-alt me-1"></i>Keluar</a>
+                <a href="../index.html" class="btn-keluar"><i class="fa fa-sign-out-alt me-1"></i>Keluar</a>
             </div>
         </aside>
 
@@ -111,12 +111,39 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            // --- 1. CEK SESI LOGIN & UPDATE PROFIL ---
+            const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+
+            if (!loggedInUser) {
+                alert('Anda belum login. Silakan login terlebih dahulu!');
+                window.location.href = '../login.html';
+                return;
+            }
+
+            // Validasi peran Tutor
+            if (loggedInUser.peran !== 'tutor') {
+                alert('Akses ditolak. Anda login sebagai Siswa.');
+                window.location.href = '../login.html';
+                return;
+            }
+
+            // Update profil di sidebar (Menggunakan querySelector karena tidak ada ID)
+            const nama = loggedInUser.nama || 'Mentor';
+            const email = loggedInUser.email || '';
+            const inisial = nama.charAt(0).toUpperCase();
+
+            document.querySelector('.info-user .nama-user').textContent = nama;
+            document.querySelector('.info-user .email-user').textContent = email;
+            document.querySelector('.info-user .avatar-user').textContent = inisial;
+
+
+            // --- DEKLARASI VARIABEL DOM ---
             const tableBody = document.querySelector('#tabelSiswa tbody');
             const searchInput = document.getElementById('inpSearch');
             const filterSelect = document.getElementById('selFilter');
             const badgeTotal = document.getElementById('totalSiswaBadge');
 
-            // --- 1. MUAT DATA DARI LOCALSTORAGE ---
+            // --- 2. MUAT DATA DARI LOCALSTORAGE ---
             function loadData() {
                 const dataSiswa = JSON.parse(localStorage.getItem('daftar_siswa')) || [];
 
@@ -131,7 +158,7 @@
                 renderTable(dataSiswa);
             }
 
-            // --- 2. RENDER TABEL ---
+            // --- 3. RENDER TABEL ---
             function renderTable(data) {
                 tableBody.innerHTML = '';
                 data.forEach((siswa, index) => {
@@ -175,7 +202,7 @@
                 });
             }
 
-            // --- 3. FILTERING LOGIC ---
+            // --- 4. FILTERING LOGIC ---
             function handleFilter() {
                 const query = searchInput.value.toLowerCase();
                 const jenjang = filterSelect.value;
@@ -190,7 +217,7 @@
                 renderTable(filtered);
             }
 
-            // --- 4. EVENT LISTENERS ---
+            // --- 5. EVENT LISTENERS ---
             searchInput.addEventListener('input', handleFilter);
             filterSelect.addEventListener('change', handleFilter);
 
@@ -241,7 +268,7 @@
                 return colors[Math.abs(hash) % colors.length];
             }
 
-            // Inisialisasi awal
+            // Inisialisasi awal (Jalankan render tabel setelah login divalidasi)
             loadData();
         });
     </script>

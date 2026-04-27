@@ -10,8 +10,17 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="stylesheet" href="../css/siswa/siswa_style.css" />
   <style>
-    .main-content { flex: 1; margin-left: 240px; transition: 0.3s; }
-    @media (max-width: 991px) { .main-content { margin-left: 0; } }
+    .main-content {
+      flex: 1;
+      margin-left: 240px;
+      transition: 0.3s;
+    }
+
+    @media (max-width: 991px) {
+      .main-content {
+        margin-left: 0;
+      }
+    }
 
     /* Kalender identik dengan tutor */
     .calendar-table th {
@@ -22,6 +31,7 @@
       text-transform: uppercase;
       padding: 10px 4px;
     }
+
     .calendar-table td {
       min-height: 90px;
       vertical-align: top;
@@ -30,20 +40,36 @@
       transition: 0.15s;
       position: relative;
     }
-    .calendar-table td:hover { background: #f5f8ff; }
+
+    .calendar-table td:hover {
+      background: #f5f8ff;
+    }
+
     .day-number {
-      width: 26px; height: 26px;
+      width: 26px;
+      height: 26px;
       border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-size: 0.85rem;
       font-weight: 700;
     }
+
     .today .day-number {
       background: var(--biru);
       color: white;
     }
-    .today { background: var(--biru-muda) !important; }
-    .other-month { color: #ccc; background: #fafafa; }
+
+    .today {
+      background: var(--biru-muda) !important;
+    }
+
+    .other-month {
+      color: #ccc;
+      background: #fafafa;
+    }
+
     .event-pill {
       font-size: 0.68rem;
       font-weight: 600;
@@ -55,9 +81,21 @@
       text-overflow: ellipsis;
       display: block;
     }
-    .event-biru { background: var(--biru-muda); color: var(--biru); }
-    .event-oranye { background: var(--oranye-lt); color: var(--oranye); }
-    .event-hijau { background: var(--hijau-lt); color: var(--hijau); }
+
+    .event-biru {
+      background: var(--biru-muda);
+      color: var(--biru);
+    }
+
+    .event-oranye {
+      background: var(--oranye-lt);
+      color: var(--oranye);
+    }
+
+    .event-hijau {
+      background: var(--hijau-lt);
+      color: var(--hijau);
+    }
   </style>
 </head>
 
@@ -92,7 +130,7 @@
             <div id="sideEmail" class="email-user">rizky@email.com</div>
           </div>
         </div>
-        <a href="../login.html" class="btn-keluar"><i class="fa fa-sign-out-alt me-1"></i>Keluar</a>
+        <a href="../index.html" class="btn-keluar"><i class="fa fa-sign-out-alt me-1"></i>Keluar</a>
       </div>
     </aside>
 
@@ -117,16 +155,25 @@
               <div class="d-flex justify-content-between align-items-center mb-4">
                 <h5 class="fw-bold mb-0" id="currentMonthYear">April 2026</h5>
                 <div class="btn-group shadow-sm">
-                  <button onclick="prevMonth()" class="btn btn-white btn-sm border"><i class="fa fa-chevron-left"></i></button>
+                  <button onclick="prevMonth()" class="btn btn-white btn-sm border"><i
+                      class="fa fa-chevron-left"></i></button>
                   <button onclick="goToToday()" class="btn btn-white btn-sm border">Hari Ini</button>
-                  <button onclick="nextMonth()" class="btn btn-white btn-sm border"><i class="fa fa-chevron-right"></i></button>
+                  <button onclick="nextMonth()" class="btn btn-white btn-sm border"><i
+                      class="fa fa-chevron-right"></i></button>
                 </div>
               </div>
               <div class="table-responsive">
-                <table class="table table-bordered calendar-table text-center" style="min-width:600px;table-layout:fixed;">
+                <table class="table table-bordered calendar-table text-center"
+                  style="min-width:600px;table-layout:fixed;">
                   <thead>
                     <tr>
-                      <th>Sen</th><th>Sel</th><th>Rab</th><th>Kam</th><th>Jum</th><th>Sab</th><th>Min</th>
+                      <th>Sen</th>
+                      <th>Sel</th>
+                      <th>Rab</th>
+                      <th>Kam</th>
+                      <th>Jum</th>
+                      <th>Sab</th>
+                      <th>Min</th>
                     </tr>
                   </thead>
                   <tbody id="calendarBody"></tbody>
@@ -155,7 +202,8 @@
             <div class="card border-0 shadow-sm p-4 h-100">
               <h5 class="fw-bold mb-4"><i class="fa fa-clock me-2 text-primary"></i>Sesi Terdekat</h5>
               <div id="upcomingSessionsList"></div>
-              <div class="mt-3 p-3" style="background:var(--biru-muda);border-radius:12px;font-size:0.8rem;color:var(--biru);">
+              <div class="mt-3 p-3"
+                style="background:var(--biru-muda);border-radius:12px;font-size:0.8rem;color:var(--biru);">
                 <i class="fa fa-info-circle me-1"></i> Klik tanggal pada kalender untuk melihat detail sesi.
               </div>
             </div>
@@ -183,6 +231,35 @@
       { mapel: 'Bahasa Inggris', tutor: 'Dewi Rahayu, S.Pd', waktu: '7 Apr, 10:00', durasi: '60 Menit', mode: 'Tatap Muka', warna: 'var(--oranye)', badge: 'badge-hijau', status: 'Terkonfirmasi' },
       { mapel: 'Fisika', tutor: 'Ahmad Fauzi, M.Si', waktu: '10 Apr, 13:00', durasi: '60 Menit', mode: 'Online', warna: 'var(--hijau)', badge: 'badge-hijau', status: 'Terkonfirmasi' },
     ];
+
+    // 1. Dijalankan otomatis saat halaman dimuat
+    document.addEventListener('DOMContentLoaded', () => {
+      // Cek sesi login di localStorage
+      const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+
+      if (!loggedInUser) {
+        alert('Anda belum login. Silakan login terlebih dahulu!');
+        // Sesuaikan path ini dengan lokasi file login.html Anda
+        window.location.href = '../login.html';
+        return;
+      }
+
+      // 2. Update data profil di sidebar
+      const nama = loggedInUser.nama || 'Siswa';
+      const email = loggedInUser.email || '';
+      const inisial = nama.charAt(0).toUpperCase();
+
+      document.getElementById('sideNama').textContent = nama;
+      document.getElementById('sideEmail').textContent = email;
+      document.getElementById('sideAvatar').textContent = inisial;
+
+      // Jika di masa depan Anda menambahkan topAvatar di topbar halaman ini, hapus komentar di bawah:
+      // const topAvatar = document.getElementById('topAvatar');
+      // if(topAvatar) topAvatar.textContent = inisial;
+
+      // 3. Mulai inisialisasi kalender dan jadwal
+      init();
+    });
 
     function renderSessions() {
       const list = document.getElementById('upcomingSessionsList');
@@ -213,7 +290,7 @@
     }
 
     function renderCalendar() {
-      const monthNames = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+      const monthNames = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
       document.getElementById('currentMonthYear').textContent = `${monthNames[currentMonth]} ${currentYear}`;
 
       const tbody = document.getElementById('calendarBody');
@@ -248,7 +325,7 @@
         for (let j = i; j < i + 7 && j < cells.length; j++) {
           const c = cells[j];
           const td = document.createElement('td');
-          const key = c.cur ? `${currentYear}-${String(currentMonth+1).padStart(2,'0')}-${String(c.day).padStart(2,'0')}` : null;
+          const key = c.cur ? `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(c.day).padStart(2, '0')}` : null;
           const isToday = c.cur && new Date(currentYear, currentMonth, c.day).toDateString() === today.toDateString();
 
           td.classList.toggle('other-month', !c.cur);
@@ -292,8 +369,7 @@
       document.getElementById('sidebar').classList.remove('active');
       document.getElementById('overlay').classList.remove('active');
     };
-
-    init();
   </script>
 </body>
+
 </html>

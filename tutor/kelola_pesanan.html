@@ -45,7 +45,7 @@
                         <div class="email-user">budi@email.com</div>
                     </div>
                 </div>
-                <a href="login.html" class="btn-keluar"><i class="fa fa-sign-out-alt me-1"></i>Keluar</a>
+                <a href="../login.html" class="btn-keluar"><i class="fa fa-sign-out-alt me-1"></i>Keluar</a>
             </div>
         </aside>
 
@@ -120,6 +120,8 @@
         </main>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
     <script>
         // 1. DATA INITIAL
         const defaultData = [
@@ -138,6 +140,51 @@
         let currentPage = 1;
         const rowsPerPage = 5;
 
+        // Dijalankan otomatis saat halaman dimuat
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- 1. CEK SESI LOGIN & UPDATE PROFIL ---
+            const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+
+            if (!loggedInUser) {
+                alert('Anda belum login. Silakan login terlebih dahulu!');
+                window.location.href = '../login.html';
+                return;
+            }
+
+            // Validasi peran Tutor
+            if (loggedInUser.peran !== 'tutor') {
+                alert('Akses ditolak. Anda login sebagai Siswa.');
+                window.location.href = '../login.html';
+                return;
+            }
+
+            // Update profil di sidebar (Menggunakan querySelector karena tidak ada ID)
+            const nama = loggedInUser.nama || 'Mentor';
+            const email = loggedInUser.email || '';
+            const inisial = nama.charAt(0).toUpperCase();
+
+            document.querySelector('.info-user .nama-user').textContent = nama;
+            document.querySelector('.info-user .email-user').textContent = email;
+            document.querySelector('.info-user .avatar-user').textContent = inisial;
+
+            // --- 2. INISIALISASI DATA PESANAN ---
+            updateStats();
+            renderTable();
+
+            // --- 3. MENU HAMBURGER MOBILE ---
+            document.getElementById('btnMenu').addEventListener('click', function () {
+                document.getElementById('sidebar').classList.add('active');
+                document.getElementById('overlay').classList.add('active');
+            });
+
+            document.getElementById('overlay').addEventListener('click', function () {
+                document.getElementById('sidebar').classList.remove('active');
+                this.classList.remove('active');
+            });
+        });
+
+        // FUNGSI-FUNGSI UTAMA (Diakses secara global / dari atribut onclick HTML)
+
         function saveToStorage() {
             localStorage.setItem('sobatPelajar_pesanan', JSON.stringify(dataPesanan));
             updateStats();
@@ -151,11 +198,10 @@
             document.getElementById('countSelesai').innerText = `${selesai} Sesi`;
         }
 
-        // --- FUNGSI BARU: KIRIM KE DAFTAR SISWA ---
         function kirimKeDaftarSiswa(pesanan) {
             let listSiswa = JSON.parse(localStorage.getItem('daftar_siswa')) || [];
 
-            // Cek apakah siswa sudah ada di daftar aktif (berdasarkan nama/email)
+            // Cek apakah siswa sudah ada di daftar aktif
             const exists = listSiswa.find(s => s.nama === pesanan.nama);
 
             if (!exists) {
@@ -173,7 +219,6 @@
             }
         }
 
-        // 2. FUNGSI RENDER TABEL
         function renderTable() {
             const tbody = document.getElementById('tableBody');
             const paginationInfo = document.getElementById('paginationInfo');
@@ -215,7 +260,7 @@
                         <td class="ps-4">
                             <div class="d-flex align-items-center">
                                 <div class="avatar-user me-3 shadow-sm" style="width: 40px; height: 40px; border-radius: 12px; background: linear-gradient(135deg, #6e8efb, #a777e3); display: flex; align-items: center; justify-content: center; font-weight: 600; color: white; font-size: 0.85rem;">
-                                    ${item.nama.split(' ').map(n => n[0]).join('')}
+                                    ${item.nama.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase()}
                                 </div>
                                 <div>
                                     <div class="fw-bold text-dark">${item.nama}</div>
@@ -290,7 +335,7 @@
             if (index !== -1) {
                 dataPesanan[index].status = statusBaru;
 
-                // Jika status disetujui, kirim ke daftar_siswa
+                // Jika status disetujui, kirim ke daftar_siswa secara otomatis
                 if (statusBaru === 'Disetujui') {
                     kirimKeDaftarSiswa(dataPesanan[index]);
                 }
@@ -299,22 +344,6 @@
                 renderTable();
             }
         }
-
-        // Hamburger Menu Logic
-        document.getElementById('btnMenu').addEventListener('click', function () {
-            document.getElementById('sidebar').classList.toggle('active');
-            document.getElementById('overlay').classList.toggle('active');
-        });
-
-        document.getElementById('overlay').addEventListener('click', function () {
-            document.getElementById('sidebar').classList.remove('active');
-            this.classList.remove('active');
-        });
-
-        document.addEventListener('DOMContentLoaded', () => {
-            updateStats();
-            renderTable();
-        });
     </script>
 </body>
 

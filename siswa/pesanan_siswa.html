@@ -42,7 +42,7 @@
             <div id="sideEmail" class="email-user">rizky@email.com</div>
           </div>
         </div>
-        <a href="../login.html" class="btn-keluar"><i class="fa fa-sign-out-alt me-1"></i>Keluar</a>
+        <a href="../index.html" class="btn-keluar"><i class="fa fa-sign-out-alt me-1"></i>Keluar</a>
       </div>
     </aside>
 
@@ -72,10 +72,14 @@
           <div class="col-md-8">
             <div class="card p-3 h-100 border-0 shadow-sm">
               <div class="d-flex flex-wrap gap-2" id="filterContainer">
-                <button onclick="filterPesanan('Semua', this)" class="btn btn-primary btn-sm rounded-pill px-3 active">Semua</button>
-                <button onclick="filterPesanan('Menunggu', this)" class="btn btn-outline-secondary btn-sm rounded-pill px-3">Menunggu</button>
-                <button onclick="filterPesanan('Disetujui', this)" class="btn btn-outline-secondary btn-sm rounded-pill px-3">Disetujui</button>
-                <button onclick="filterPesanan('Dibatalkan', this)" class="btn btn-outline-secondary btn-sm rounded-pill px-3">Dibatalkan</button>
+                <button onclick="filterPesanan('Semua', this)"
+                  class="btn btn-primary btn-sm rounded-pill px-3 active">Semua</button>
+                <button onclick="filterPesanan('Menunggu', this)"
+                  class="btn btn-outline-secondary btn-sm rounded-pill px-3">Menunggu</button>
+                <button onclick="filterPesanan('Disetujui', this)"
+                  class="btn btn-outline-secondary btn-sm rounded-pill px-3">Disetujui</button>
+                <button onclick="filterPesanan('Dibatalkan', this)"
+                  class="btn btn-outline-secondary btn-sm rounded-pill px-3">Dibatalkan</button>
               </div>
             </div>
           </div>
@@ -92,7 +96,8 @@
           <div class="table-responsive">
             <table class="table table-hover align-middle mb-0">
               <thead>
-                <tr style="background:var(--bg);font-size:.82rem;color:var(--abu);font-weight:700;text-transform:uppercase;">
+                <tr
+                  style="background:var(--bg);font-size:.82rem;color:var(--abu);font-weight:700;text-transform:uppercase;">
                   <th class="ps-4 py-3">Tutor</th>
                   <th>Mata Pelajaran</th>
                   <th>Jadwal</th>
@@ -124,12 +129,37 @@
     ];
 
     const badgeMap = {
-      'Menunggu':   { kelas: 'badge bg-warning text-dark', icon: 'fa-clock' },
-      'Disetujui':  { kelas: 'badge bg-success text-white', icon: 'fa-check-circle' },
+      'Menunggu': { kelas: 'badge bg-warning text-dark', icon: 'fa-clock' },
+      'Disetujui': { kelas: 'badge bg-success text-white', icon: 'fa-check-circle' },
       'Dibatalkan': { kelas: 'badge bg-danger text-white', icon: 'fa-times-circle' },
     };
 
     let filterAktif = 'Semua';
+
+    // 1. Dijalankan otomatis saat halaman dimuat
+    document.addEventListener('DOMContentLoaded', () => {
+      // Cek sesi login di localStorage
+      const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+
+      if (!loggedInUser) {
+        alert('Anda belum login. Silakan login terlebih dahulu!');
+        // Sesuaikan path ini dengan lokasi file login.html Anda
+        window.location.href = '../login.html';
+        return;
+      }
+
+      // 2. Update data profil di sidebar
+      const nama = loggedInUser.nama || 'Siswa';
+      const email = loggedInUser.email || '';
+      const inisial = nama.charAt(0).toUpperCase();
+
+      document.getElementById('sideNama').textContent = nama;
+      document.getElementById('sideEmail').textContent = email;
+      document.getElementById('sideAvatar').textContent = inisial;
+
+      // 3. Render tabel pesanan setelah user divalidasi
+      renderPesanan(pesanan);
+    });
 
     function renderPesanan(data) {
       const tbody = document.getElementById('tabelPesanan');
@@ -193,8 +223,6 @@
       document.getElementById('sidebar').classList.remove('active');
       document.getElementById('overlay').classList.remove('active');
     };
-
-    renderPesanan(pesanan);
   </script>
 
   <style>
@@ -206,10 +234,28 @@
       cursor: pointer;
       transition: 0.2s;
     }
-    .btn-aksi:hover { opacity: 0.85; transform: scale(1.05); }
-    .extra-small { font-size: 0.72rem; }
-    .main-content { flex: 1; margin-left: 240px; transition: 0.3s; }
-    @media (max-width: 991px) { .main-content { margin-left: 0; } }
+
+    .btn-aksi:hover {
+      opacity: 0.85;
+      transform: scale(1.05);
+    }
+
+    .extra-small {
+      font-size: 0.72rem;
+    }
+
+    .main-content {
+      flex: 1;
+      margin-left: 240px;
+      transition: 0.3s;
+    }
+
+    @media (max-width: 991px) {
+      .main-content {
+        margin-left: 0;
+      }
+    }
   </style>
 </body>
+
 </html>

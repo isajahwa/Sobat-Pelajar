@@ -40,7 +40,7 @@
                         <div class="email-user">budi@email.com</div>
                     </div>
                 </div>
-                <a href="login.html" class="btn-keluar"><i class="fa fa-sign-out-alt me-1"></i>Keluar</a>
+                <a href="../index.html" class="btn-keluar"><i class="fa fa-sign-out-alt me-1"></i>Keluar</a>
             </div>
         </aside>
 
@@ -144,6 +144,53 @@
     <script>
         let date = new Date();
         let dataPesanan = JSON.parse(localStorage.getItem('sobatPelajar_pesanan')) || [];
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // --- 1. CEK SESI LOGIN & UPDATE PROFIL ---
+            const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+
+            if (!loggedInUser) {
+                alert('Anda belum login. Silakan login terlebih dahulu!');
+                window.location.href = '../login.html';
+                return;
+            }
+
+            // Validasi peran Tutor
+            if (loggedInUser.peran !== 'tutor') {
+                alert('Akses ditolak. Anda login sebagai Siswa.');
+                window.location.href = '../login.html';
+                return;
+            }
+
+            // Update profil di sidebar (Menggunakan querySelector karena tidak ada ID)
+            const nama = loggedInUser.nama || 'Mentor';
+            const email = loggedInUser.email || '';
+            const inisial = nama.charAt(0).toUpperCase();
+
+            document.querySelector('.info-user .nama-user').textContent = nama;
+            document.querySelector('.info-user .email-user').textContent = email;
+            document.querySelector('.info-user .avatar-user').textContent = inisial;
+
+            // --- 2. MENU HAMBURGER MOBILE ---
+            const btnMenu = document.getElementById('btnMenu');
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+
+            if (btnMenu && sidebar && overlay) {
+                btnMenu.addEventListener('click', () => {
+                    sidebar.classList.add('active');
+                    overlay.classList.add('active');
+                });
+
+                overlay.addEventListener('click', () => {
+                    sidebar.classList.remove('active');
+                    overlay.classList.remove('active');
+                });
+            }
+
+            // --- 3. INISIALISASI KALENDER ---
+            renderCalendar();
+        });
 
         function renderCalendar() {
             const calendarBody = document.getElementById('calendarBody');
@@ -308,8 +355,6 @@
         window.prevMonth = () => { date.setMonth(date.getMonth() - 1); renderCalendar(); };
         window.nextMonth = () => { date.setMonth(date.getMonth() + 1); renderCalendar(); };
         window.goToToday = () => { date = new Date(); renderCalendar(); };
-
-        document.addEventListener('DOMContentLoaded', renderCalendar);
     </script>
 </body>
 

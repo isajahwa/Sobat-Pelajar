@@ -9,7 +9,19 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="stylesheet" href="../css/siswa/siswa_style.css" />
-  <style>.main-content{flex:1;margin-left:240px;transition:0.3s;}@media(max-width:991px){.main-content{margin-left:0;}}</style>
+  <style>
+    .main-content {
+      flex: 1;
+      margin-left: 240px;
+      transition: 0.3s;
+    }
+
+    @media(max-width:991px) {
+      .main-content {
+        margin-left: 0;
+      }
+    }
+  </style>
 </head>
 
 <body>
@@ -42,7 +54,7 @@
             <div class="email-user" id="sideEmail">rizky@email.com</div>
           </div>
         </div>
-        <a href="../login.html" class="btn-keluar"><i class="fa fa-sign-out-alt me-1"></i>Keluar</a>
+        <a href="../index.html" class="btn-keluar"><i class="fa fa-sign-out-alt me-1"></i>Keluar</a>
       </div>
     </aside>
 
@@ -67,7 +79,8 @@
       <div class="area-halaman">
 
         <!-- ALERT -->
-        <div class="alert-sukses" id="alertSukses"><i class="fa fa-check-circle me-1"></i> Profil berhasil disimpan!</div>
+        <div class="alert-sukses" id="alertSukses"><i class="fa fa-check-circle me-1"></i> Profil berhasil disimpan!
+        </div>
 
         <div class="row g-4">
 
@@ -79,7 +92,8 @@
                 <div class="btn-edit-avatar" title="Ganti foto"><i class="fa fa-camera"></i></div>
               </div>
               <div style="font-weight:700;font-size:1.1rem;" id="previewNama">Rizky Aditya</div>
-              <div style="color:var(--abu);font-size:0.82rem;margin-top:4px;" id="previewSekolah">SMA Negeri 1 Surabaya</div>
+              <div style="color:var(--abu);font-size:0.82rem;margin-top:4px;" id="previewSekolah">SMA Negeri 1 Surabaya
+              </div>
               <div class="d-flex gap-2 justify-content-center mt-2">
                 <span class="badge badge-biru">Kelas 12</span>
                 <span class="badge badge-hijau">Siswa Aktif</span>
@@ -110,7 +124,8 @@
               <!-- Link profil -->
               <div class="mt-4 text-start">
                 <div style="font-size:0.78rem;font-weight:700;color:var(--abu);margin-bottom:6px;">ID SISWA</div>
-                <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:8px 12px;font-size:0.82rem;font-weight:600;color:var(--biru);">
+                <div
+                  style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:8px 12px;font-size:0.82rem;font-weight:600;color:var(--biru);">
                   SP-2024-0042
                 </div>
               </div>
@@ -128,7 +143,8 @@
                   <div class="col-md-6">
                     <div class="form-grup">
                       <label class="form-label">Nama Lengkap</label>
-                      <input type="text" class="form-input" id="inputNama" value="Rizky Aditya" oninput="updatePreview()">
+                      <input type="text" class="form-input" id="inputNama" value="Rizky Aditya"
+                        oninput="updatePreview()">
                     </div>
                   </div>
                   <div class="col-md-6">
@@ -140,7 +156,8 @@
                   <div class="col-md-6">
                     <div class="form-grup">
                       <label class="form-label">Email</label>
-                      <input type="email" class="form-input" id="inputEmail" value="rizky@email.com" readonly style="background:var(--bg);color:var(--abu);">
+                      <input type="email" class="form-input" id="inputEmail" value="rizky@email.com" readonly
+                        style="background:var(--bg);color:var(--abu);">
                     </div>
                   </div>
                   <div class="col-md-6">
@@ -152,7 +169,8 @@
                   <div class="col-md-6">
                     <div class="form-grup">
                       <label class="form-label">Asal Sekolah</label>
-                      <input type="text" class="form-input" id="inputSekolah" value="SMA Negeri 1 Surabaya" oninput="updatePreview()">
+                      <input type="text" class="form-input" id="inputSekolah" value="SMA Negeri 1 Surabaya"
+                        oninput="updatePreview()">
                     </div>
                   </div>
                   <div class="col-md-6">
@@ -179,13 +197,15 @@
                   <div class="col-12">
                     <div class="form-grup" style="margin-bottom:0;">
                       <label class="form-label">Catatan / Kebutuhan Khusus</label>
-                      <textarea class="form-textarea" id="inputCatatan" placeholder="Contoh: lebih suka belajar dengan metode visual, butuh persiapan UTBK...">Sedang fokus persiapan UTBK 2026. Lebih nyaman belajar malam hari.</textarea>
+                      <textarea class="form-textarea" id="inputCatatan"
+                        placeholder="Contoh: lebih suka belajar dengan metode visual, butuh persiapan UTBK...">Sedang fokus persiapan UTBK 2026. Lebih nyaman belajar malam hari.</textarea>
                     </div>
                   </div>
                 </div>
 
                 <div class="d-flex gap-3 mt-4">
-                  <button class="btn-submit" onclick="simpanProfil()"><i class="fa fa-save me-1"></i>Simpan Perubahan</button>
+                  <button class="btn-submit" onclick="simpanProfil()"><i class="fa fa-save me-1"></i>Simpan
+                    Perubahan</button>
                   <button class="btn-batal">Batal</button>
                 </div>
               </div>
@@ -202,15 +222,18 @@
                     <div style="font-weight:600;font-size:0.9rem;">Kata Sandi</div>
                     <div style="color:var(--abu);font-size:0.8rem;margin-top:2px;">Terakhir diubah 3 bulan lalu</div>
                   </div>
-                  <button class="btn-batal" style="color:var(--merah);border-color:var(--merah);" onclick="alert('Fitur ubah password akan segera tersedia.')">🔑 Ubah Password</button>
+                  <button class="btn-batal" style="color:var(--merah);border-color:var(--merah);"
+                    onclick="alert('Fitur ubah password akan segera tersedia.')">🔑 Ubah Password</button>
                 </div>
                 <hr style="border-color:var(--border);margin:16px 0;">
                 <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
                   <div>
                     <div style="font-weight:600;font-size:0.9rem;">Hapus Akun</div>
-                    <div style="color:var(--abu);font-size:0.8rem;margin-top:2px;">Tindakan ini tidak dapat dibatalkan</div>
+                    <div style="color:var(--abu);font-size:0.8rem;margin-top:2px;">Tindakan ini tidak dapat dibatalkan
+                    </div>
                   </div>
-                  <button class="btn-batal" style="color:var(--abu);" onclick="alert('Hubungi admin untuk menghapus akun.')">Hapus Akun</button>
+                  <button class="btn-batal" style="color:var(--abu);"
+                    onclick="alert('Hubungi admin untuk menghapus akun.')">Hapus Akun</button>
                 </div>
               </div>
             </div>
@@ -222,33 +245,106 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script>
+    // 1. Dijalankan otomatis saat halaman selesai dimuat
+    document.addEventListener('DOMContentLoaded', () => {
+      // Ambil data user yang sedang login dari localStorage
+      const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+
+      // Jika tidak ada user yang login, arahkan kembali ke halaman login
+      if (!loggedInUser) {
+        alert('Anda belum login. Silakan login terlebih dahulu!');
+        window.location.href = '../login.html'; // Sesuaikan dengan nama file login Anda
+        return;
+      }
+
+      // 2. Isi form dengan data dari localStorage
+      document.getElementById('inputNama').value = loggedInUser.nama || '';
+      document.getElementById('inputEmail').value = loggedInUser.email || '';
+      document.getElementById('inputTelp').value = loggedInUser.nohp || '';
+
+      // Jika ada data tambahan (sekolah, tgl lahir) yang pernah disimpan, tampilkan
+      if (loggedInUser.sekolah) document.getElementById('inputSekolah').value = loggedInUser.sekolah;
+      if (loggedInUser.tanggalLahir) document.getElementById('inputTgl').value = loggedInUser.tanggalLahir;
+      if (loggedInUser.kelas) document.getElementById('inputKelas').value = loggedInUser.kelas;
+      if (loggedInUser.catatan) document.getElementById('inputCatatan').value = loggedInUser.catatan;
+
+      // 3. Perbarui tampilan UI (Nama, Avatar, Sidebar)
+      updatePreview();
+    });
+
+    // Fungsi untuk memperbarui tampilan teks dan avatar secara real-time
     function updatePreview() {
       const nama = document.getElementById('inputNama').value || 'Siswa';
       const sekolah = document.getElementById('inputSekolah').value || '—';
+      const email = document.getElementById('inputEmail').value || '';
+      const inisial = nama.charAt(0).toUpperCase();
+
+      // Update Kartu Profil (Kiri)
       document.getElementById('previewNama').textContent = nama;
       document.getElementById('previewSekolah').textContent = sekolah;
-      document.getElementById('mainAvatar').childNodes[0].textContent = nama.charAt(0).toUpperCase();
-      document.getElementById('sideAvatar').textContent = nama.charAt(0).toUpperCase();
-      document.getElementById('topAvatar').textContent = nama.charAt(0).toUpperCase();
+
+      // Update Sidebar & Topbar
       document.getElementById('sideNama').textContent = nama;
+      document.getElementById('sideEmail').textContent = email;
+
+      // Update Avatar
+      document.getElementById('sideAvatar').textContent = inisial;
+      document.getElementById('topAvatar').textContent = inisial;
+
+      // Khusus mainAvatar, kita ubah textNode pertamanya agar tidak menimpa icon kamera
+      document.getElementById('mainAvatar').childNodes[0].nodeValue = inisial + " ";
     }
 
+    // Fungsi untuk menyimpan perubahan profil
     function simpanProfil() {
-      const alert = document.getElementById('alertSukses');
-      alert.classList.add('tampil');
-      setTimeout(() => alert.classList.remove('tampil'), 3000);
+      // Ambil data user yang sedang login
+      let loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+
+      if (!loggedInUser) return;
+
+      // Update objek user dengan nilai baru dari form
+      loggedInUser.nama = document.getElementById('inputNama').value;
+      loggedInUser.nohp = document.getElementById('inputTelp').value;
+      loggedInUser.sekolah = document.getElementById('inputSekolah').value;
+      loggedInUser.tanggalLahir = document.getElementById('inputTgl').value;
+      loggedInUser.kelas = document.getElementById('inputKelas').value;
+      loggedInUser.catatan = document.getElementById('inputCatatan').value;
+
+      // 1. Simpan kembali ke sesi login (loggedInUser)
+      localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser));
+
+      // 2. Simpan juga ke database utama (dataUsers) agar data tersinkronisasi
+      let users = JSON.parse(localStorage.getItem('dataUsers')) || [];
+      const userIndex = users.findIndex(u => u.email === loggedInUser.email);
+
+      if (userIndex !== -1) {
+        // Gabungkan data lama dengan data baru
+        users[userIndex] = { ...users[userIndex], ...loggedInUser };
+        localStorage.setItem('dataUsers', JSON.stringify(users));
+      }
+
+      // Perbarui UI
+      updatePreview();
+
+      // Tampilkan notifikasi sukses
+      const alertNotif = document.getElementById('alertSukses');
+      alertNotif.classList.add('tampil');
+      setTimeout(() => alertNotif.classList.remove('tampil'), 3000);
     }
 
+    // --- Script interaksi bawaan Anda ---
     document.getElementById('btnMenu').onclick = () => {
       document.getElementById('sidebar').classList.add('active');
       document.getElementById('overlay').classList.add('active');
-      document.getElementById('overlay').classList.add('active');
     };
+
     document.getElementById('overlay').onclick = () => {
       document.getElementById('sidebar').classList.remove('active');
       document.getElementById('overlay').classList.remove('active');
     };
   </script>
 </body>
+
 </html>
