@@ -17,9 +17,9 @@
             </div>
             <nav class="sidebar-menu">
                 <div class="menu-label">Menu Utama</div>
-               <a href="dashboardAdmin.html" class="menu-item">Dashboard</a>
+               <a href="dashboardAdmin.html" class="menu-item aktif">Dashboard</a>
                <a href="dataTutor.html" class="menu-item">Data Tutor</a>
-               <a href="dataSiswa.html" class="menu-item aktif">Data Siswa</a>
+               <a href="dataSiswa.html" class="menu-item">Data Siswa</a>
                <a href="dataKelas.html" class="menu-item">Data Kelas</a>
                <a href="laporanAdmin.html" class="menu-item">Laporan</a>
                <a href="riwayatTransaksi.html" class="menu-item">Riwayat Transaksi</a>
@@ -38,5 +38,34 @@
         </aside>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const dataAdmin = {
+                username: 'admin123',
+                password: 'admin123',
+                peran: 'admin'
+            }
+            localStorage.setItem('adminData', JSON.stringify(dataAdmin));
+
+      const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+
+      if (!loggedInUser) {
+        alert('Akses ditolak!');
+        window.location.href = './adminLogin.html';
+        return;
+      }
+
+      const nama = loggedInUser.nama || 'Mentor';
+      const email = loggedInUser.email || '';
+      const inisial = nama.charAt(0).toUpperCase();
+
+      document.getElementById('sideNama').innerText = nama;
+      document.getElementById('sideEmail').innerText = email;
+      document.getElementById('sideAvatar').innerText = inisial;
+      document.getElementById('topAvatar').innerText = inisial;
+    }
+    );
+    
+    </script>
 </body>
 </html>
