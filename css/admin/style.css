@@ -35,6 +35,13 @@ body {
 /* ================================================
    2. LAYOUT & SIDEBAR
    ================================================ */
+.line-chart {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    margin-top: 20px;
+}
+
 .layout {
     display: flex;
     min-height: 100vh;
