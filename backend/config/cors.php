@@ -23,6 +23,7 @@ return [
         'http://127.0.0.1:5500',  // Live Server default
         'http://localhost:3000',  // PHP built-in server
         'http://localhost:8080',
+        'http://localhost:5500',
     ],
 
     'allowed_origins_patterns' => [],
